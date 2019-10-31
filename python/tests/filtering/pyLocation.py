@@ -104,6 +104,7 @@ for i in range(len(df_list)):
     print(mom.head(10))
     ax[i].plot(mom.time, mom.temp)
     ax[i].grid()
+    ax[i].set_ylim([0, 80])
     info('Done {0} of 9 in {1:02.2f}s'.format(i+1, oohTiming.time()-s))
 
 info('Script finished in {}s'.format(oohTiming.time()-progStartTime))
