@@ -1,3 +1,4 @@
+import logging
 import time as oohTiming
 import cdflib
 import numpy as np
@@ -8,6 +9,18 @@ import pandas as pd
 from operator import itemgetter
 from itertools import *
 
+progStartTime = oohTiming.time()
+
+def info(s):
+    logging.info(s)
+    print(s)
+
+
+logging.basicConfig(filename='log.log', filemode='w',
+                    format='[%(asctime)-%(name)-%(levelname)] %(message)')
+
+info('Starting script')
+
 cwd = '/Users/jamesplank/OneDrive/Documents/Work/University/MPHYS/Aurora/MPHYS/python/tests/filtering/'
 cdf_file = cdflib.CDF(cwd+'locationData.cdf')
 
@@ -16,8 +29,6 @@ pos = cdf_file.varget('sc_r_xyz_gse__CL_JP_PGP')
 offset = 62167219200000
 
 ep = cdflib.cdfepoch.unixtime(timetags[0], to_np=True)
-## print(ep)
-## print(dt.datetime.utcfromtimestamp(ep[0]))
 
 time = np.array(timetags)
 time = time - offset
@@ -28,13 +39,13 @@ time = np.array([dt.datetime.utcfromtimestamp(int(np.floor(i/1000))) for i in ti
 
 data = pd.DataFrame(np.column_stack([time, pos[:,0], pos[:,1], pos[:,2]]), columns=['time', 'x', 'y', 'z'])
 data.set_index('time')
-## print(dt.datetime.strftime(time[0], '%Y-%m-%d %H:%M:%S'))
+
+info('Position data loaded')
 
 def get_range(df, low, high):
     if isinstance(low, str):
         low = dt.datetime.strptime(low, '%Y-%m-%d %H:%M:%S')
         high = dt.datetime.strptime(high, '%Y-%m-%d %H:%M:%S')
-    print(low, high)
     df_list = []
     for i, row in df.iterrows():
         if (row.time >= low and row.time <= high):
@@ -44,6 +55,7 @@ def get_range(df, low, high):
     return df.loc[df_list]
 
 daterange = get_range(data, '2005-09-10 00:00:00', '2005-09-20 23:59:59')
+info('Data filtered by position')
 
 def get_alt(df, alt=6, points=True):
     """Return dataframe filtered for points above a certain z.
@@ -60,6 +72,7 @@ def get_alt(df, alt=6, points=True):
         return df.loc[df_list]
 
 df_list, altFilter = get_alt(daterange)
+info('Data filtered by altitude')
 
 cluster_loc = '/Users/jamesplank/OneDrive/Documents/Work/University/MPHYS/Aurora/data_archive/cluster_september_05/'
 cl_moments = cdflib.CDF(cluster_loc+'september_05_moments.cdf')
@@ -70,26 +83,32 @@ temp = cl_moments.varget('temperature__C1_CP_CIS-HIA_ONBOARD_MOMENTS')
 density = cl_moments.varget('density__C1_CP_CIS-HIA_ONBOARD_MOMENTS')
 moments = pd.DataFrame(np.column_stack([time, temp, density]), columns=['time', 'temp', 'dens'])
 moments.set_index('time')
+info('moments data loaded')
 
-## print(df_list[:50])
 df_list = [list(map(itemgetter(1), g)) for k, g in groupby(enumerate(df_list), lambda x: x[0]-x[1])]
-## print(df_list[:5])
 
 for i in range(len(df_list)):
     start = altFilter.loc[df_list[i][0]].time
     end = altFilter.loc[df_list[i][-1]].time
     df_list[i] = (start, end)
+info('List of zone entry and exit times generated')
 
-## print(df_list)
 
-fig, ax = plt.subplots(9, 1, figsize=(8,8))
+info('Starting plotting')
+fig, ax = plt.subplots(9, 1, figsize=(12,8))
 for i in range(len(df_list)):
+    info('Beginning {0} - {1} period'.format(dt.datetime.strftime(df_list[i][0], '%Y/%m/%d-%H:%M:%S'),
+                                             dt.datetime.strftime(df_list[i][1], '%Y/%m/%d-%H:%M:%S')))
     s = oohTiming.time()
     mom = get_range(moments, *df_list[i])
     print(mom.head(10))
     ax[i].plot(mom.time, mom.temp)
-    print('Done {0} of 9 in {1:02.2f}s'.format(i, oohTiming.time()-s))
+    ax[i].grid()
+    info('Done {0} of 9 in {1:02.2f}s'.format(i+1, oohTiming.time()-s))
 
+info('Script finished in {}s'.format(oohTiming.time()-progStartTime))
+
+plt.tight_layout()
 plt.show()
 
 ## fs = 8
