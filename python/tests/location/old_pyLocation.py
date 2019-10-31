@@ -12,6 +12,9 @@ timetags = cdf_file.varget('Epoch__CL_JP_PGP')
 pos = cdf_file.varget('sc_r_xyz_gse__CL_JP_PGP')
 offset = 62167219200000
 
+ep = cdflib.cdfepoch.unixtime(timetags[0], to_np=True)
+print(ep)
+print(dt.datetime.utcfromtimestamp(ep[0]))
 
 time = np.array(timetags)
 time = time - offset
