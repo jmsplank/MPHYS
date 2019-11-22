@@ -75,18 +75,19 @@ with Timer('Searching for high temperatures'):
 
 with Timer('Generating plot'):
     avg_ang = []
-    for alt in np.linspace(0, 7, 50):
+    spacing = 0.15
+    for alt in np.arange(0, 7, spacing):
         alt_filter = locations.loc[locations.z >= alt*6371]
 
-        with Timer('creating angles'):
-            imf_filt = imf.loc[times].copy()
-            imf_filt = imf.loc[alt_filter.time.tolist()].copy()
-            imf_filt['ang_xz'] = np.arctan(imf.bz/imf.bx)
-            imf_filt['ang_yz'] = np.arctan(imf.bz/imf.by)
-        avg_ang.append(imf_filt['ang_xz'].mean())
-    plt.plot(np.linspace(0,7,50), avg_ang)
+        imf_filt = imf.loc[times].copy()
+        imf_filt = imf.loc[alt_filter.time.tolist()].copy()
+        imf_filt['ang_yz'] = np.arctan2(imf.bz, imf.by)
+        if len(imf_filt) >= 3:
+            avg_ang.append(imf_filt['ang_yz'].mean())
+    plt.plot(np.arange(0,len(avg_ang))*spacing, avg_ang)
     plt.xlabel(r'$r R_\oplus$')
-    plt.ylabel(r'Average angle $\overline{B_{xz}}$')
+    plt.ylabel(r'Average angle $\overline{\theta_{yz}}$')
+    plt.title('September 2005')
 
 
 ##with Timer('plotting'):
@@ -102,4 +103,5 @@ with Timer('Generating plot'):
         ##bar.set_alpha(0.5)
 
 ##plt.savefig(cwd+'radial_xz_{0}MK.png'.format(mk))
+plt.tight_layout()
 plt.show()
