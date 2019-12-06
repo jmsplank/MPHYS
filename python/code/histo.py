@@ -45,9 +45,9 @@ with Timer('Load cluster moments'):
 with Timer('Loading IMF data'):
     cdf_imf = cdflib.CDF(cluster_loc+'{}_imf.cdf'.format(folder))
     timetags = cdf_imf.varget('Epoch')
-    imf_z = cdf_imf.varget('BZ_GSE')
+    imf_z = cdf_imf.varget('BZ_GSM')
     imf_x = cdf_imf.varget('BX_GSE')
-    imf_y = cdf_imf.varget('BY_GSE')
+    imf_y = cdf_imf.varget('BY_GSM')
     time = cdflib.cdfepoch.unixtime(timetags)
     time = [dt.datetime.utcfromtimestamp(t) for t in time]
     imf = pd.DataFrame(np.column_stack([time, imf_x, imf_y, imf_z]), columns=['time', 'bx', 'by', 'bz'])
@@ -74,38 +74,20 @@ with Timer('Searching for high temperatures'):
     times = np.unique([x.replace(second=0, microsecond=0) for x in times])
 
 with Timer('Generating plot'):
-    ##HISTOGRAM
-    ang = []
-    rad = []
-    spacing = 1.7
-
     avg_ang = []
-    #spacing = 0.15
+    spacing = 0.15
     for alt in np.arange(0, 7, spacing):
         alt_filter = locations.loc[locations.z >= alt*6371]
 
         imf_filt = imf.loc[times].copy()
         imf_filt = imf.loc[alt_filter.time.tolist()].copy()
-        imf_filt['ang_yz'] = np.arctan2(imf.by, imf.bz)
+        imf_filt['ang_yz'] = np.arctan2(imf.bz, imf.by)
         if len(imf_filt) >= 3:
-            imf_filt['sine'] = np.sin(imf_filt['ang_yz'])
-            imf_filt['cos'] = np.sin(imf_filt['ang_yz'])
-            ang.append(np.arctan2(imf_filt['sine'], imf_filt['cos']))
-            rad.append(np.sqrt(imf_filt['sine']**2+imf_filt['cos']**2))
-            #S = 1./len(imf_filt) * np.sum(np.sin(imf_filt['ang_yz']))
-            #C = 1./len(imf_filt) * np.sum(np.cos(imf_filt['ang_yz']))
-            #avg_ang.append(np.degrees(np.arctan2(S, C)))
-
-        ##HIST
-        a = np.linspace(0, 2*np.pi, 5)
-        b = np.abs(np.random.normal(0, 1, size=5))
-        plt.polar(a, b, linestyle='none', marker='x')
-        plt.title(r'Altitude $>{:02f}R_\oplus$'.format(alt))
-    #plt.plot(np.arange(0,len(avg_ang))*spacing, avg_ang)
-    #plt.xlabel(r'$r R_\oplus$')
-    #plt.ylabel(r'Average angle $\overline{\theta_{yz}}$')
-    #plt.title('September 2005')
-
+            avg_ang.append(imf_filt['ang_yz'].mean())
+    plt.plot(np.arange(0,len(avg_ang))*spacing, avg_ang)
+    plt.xlabel(r'$r R_\oplus$')
+    plt.ylabel(r'Average angle $\overline{\theta_{yz}}$')
+    plt.title('September 2005')
 
 
 ##with Timer('plotting'):
