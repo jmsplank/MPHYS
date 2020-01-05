@@ -57,7 +57,10 @@ with Timer('Loading moments data'):
     moments.temp = moments.temp.mask(moments.temp > 1000).interpolate()
 
 with Timer('Plotting'):
-    fig, ax = plt.subplots(2, 1, sharex=True, figsize=[15, 8])
+    plt.rc('font', family='serif')
+    plt.rc('xtick', labelsize='x-small')
+    plt.rc('ytick', labelsize='x-small')
+    fig, ax = plt.subplots(2, 1, sharex=True, figsize=[9, 6])
 
     ax[0].set_ylabel('Energy (eV)')
     ax[0].set_title('Differential particle flux')
@@ -69,12 +72,12 @@ with Timer('Plotting'):
     cax = divider0.append_axes("right", size="5%", pad=.05)
     cb = fig.colorbar(cm, cax=cax)
     cb.set_label(r'Ions - DPF $keV/cm^2/s/str$', rotation=90)
-    ax[0].set_xlim([pd.to_datetime('2005-09-10 00:00:00'), pd.to_datetime('2005-09-20 00:00:00')])
+    #ax[0].set_xlim([pd.to_datetime('2005-09-10 00:00:00'), pd.to_datetime('2005-09-20 00:00:00')])
     
     ax[1].set_ylabel('Ion temp (MK)')
     ax[1].set_title('Ion temperature')
-    ax[1].plot(moments.time, moments.temp)
-    ax[1].set_xticks(moments.time[::len(moments.time)//16])
+    ax[1].plot(moments.time, moments.temp, color='k', linewidth=1)
+    ax[1].set_xticks(moments.time[::len(moments.time)//6])
     ax[1].xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %H:%M:%S'))
     ax[1].set_xlabel('UTC for the month of September 2005')
     divider1 = make_axes_locatable(ax[1])
@@ -82,11 +85,11 @@ with Timer('Plotting'):
     cax2.remove()
 
     ax[1].plot([dt.datetime.strptime('2005-09-15 14:00:00', '%Y-%m-%d %H:%M:%S')]*2,
-               [moments.temp.min(), moments.temp.max()], color='g')
+               [moments.temp.min(), moments.temp.max()], color='k', ls='dashed')
     ax[1].plot([dt.datetime.strptime('2005-09-15 22:00:00', '%Y-%m-%d %H:%M:%S')]*2,
-               [moments.temp.min(), moments.temp.max()], color='g')
+               [moments.temp.min(), moments.temp.max()], color='k', ls='dashed')
     
-    ax[0].set_xlim([pd.to_datetime('2005-09-10 00:00:00'), pd.to_datetime('2005-09-20 00:00:00')])
+    #ax[0].set_xlim([pd.to_datetime('2005-09-10 00:00:00'), pd.to_datetime('2005-09-20 00:00:00')])
 
 plt.tight_layout()
-plt.show()
+plt.savefig('python/code/prog_rept_plots/temp_DPF/plot.png', dpi=500)
