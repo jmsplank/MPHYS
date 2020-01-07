@@ -60,5 +60,8 @@ with Timer('Plotting'):
     ax[1].set_xticks(imf.time[::len(imf.time)//4])
     ax[1].xaxis.set_major_formatter(mdates.DateFormatter('%m/%d %H:%M'))
 
+print(np.mean(imf.bz), np.std(imf.bz))
+print(np.mean(imf.by), np.std(imf.by))
+
 plt.tight_layout()
-plt.savefig('python/code/prog_rept_plots/imf_ts/imf_ts.png', dps=300)
+#plt.savefig('python/code/prog_rept_plots/imf_ts/imf_ts.png', dps=300)
