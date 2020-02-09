@@ -115,7 +115,7 @@ with Timer('Generating plot'):
     plt.rc('xtick', labelsize='x-small')
     plt.rc('ytick', labelsize='x-small')
 
-    binnable = loc_imf[loc_imf.z.between(6, 20)].copy()
+    binnable = loc_imf[loc_imf.z.between(0, 20)].copy()
     binnable = binnable.dropna()
     sns.jointplot(binnable.by, binnable.bz, kind='kde', cmap='viridis', n_levels=60)
     # ax1 = sns.jointplot(binnable.by, binnable.bz, marginal_kws=dict(bins=60), color='k')
