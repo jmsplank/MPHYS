@@ -75,40 +75,66 @@ with Timer('Getting temperatures'):
     temps = pd.read_csv(
         '/Users/jamesplank/OneDrive/Documents/Work/University/MPHYS/Aurora/data_archive/cluster_october_05/october_05_temps.csv',
         index_col=0, parse_dates=True)
-print(temps.max())
 
 loc_imf = pd.merge_asof(imf, locations, left_index=True, right_index=True)
 loc_imf = pd.merge_asof(loc_imf, temps, left_index=True, right_index=True)
-loc_imf['theta'] = np.abs(np.arctan2(loc_imf.by, loc_imf.bz))
-loc_imf.z = np.abs(loc_imf.z) / 6371
+loc_imf['theta'] = np.arctan2(loc_imf.by, loc_imf.bz)
+print(min(loc_imf.theta), max(loc_imf.theta))
+# loc_imf.z = np.abs(loc_imf.z) / 6371
+loc_imf.z = loc_imf.z / 6371
+loc_imf.x = loc_imf.x / 6371
 
+fig = plt.figure(figsize=[6, 6])
 plt.rc('font', family='serif')
 plt.rc('xtick', labelsize='x-small')
 plt.rc('ytick', labelsize='x-small')
 
-fig = plt.figure(figsize=[10, 6])
-plt.xlabel(r'$Z_{GSM} R_\oplus$')
-plt.ylabel(r'$\overline{B_z}$ nT')
-plt.title('july -> october 2005')
-plt.grid()
-
-n = 10
-colours = [cm.rainbow(i) for i in np.linspace(0, 1, n)]
-for i, T in enumerate(np.linspace(0, 100, num=n)):
+c = ['Blues', 'Greens', 'Oranges', 'Reds']
+for i, T in enumerate(np.linspace(20, 60, 4)):
     filter_by_temp = loc_imf[loc_imf.temp >= T]
-    n_bins = 60
-    bins = [[a, filter_by_temp.z.max()] for a in np.linspace(0, filter_by_temp.z.max(), num=n_bins)]
-    means = []
-    for b in bins:
-        binnable = filter_by_temp[filter_by_temp.z.between(b[0], b[1])].copy()
-        if len(binnable) > 10:
-            means.append([binnable.bz.mean(), binnable.bz.std()])
-        else:
-            means.append([np.nan]*2)
+    plt.hist2d(filter_by_temp.x, filter_by_temp.z, 100,
+               cmap=c[i], cmin=2, norm=mpl.colors.LogNorm(), label='{:2.1f}mK')
+plt.plot(np.sin(np.linspace(0, 2*np.pi, 20)), np.cos(np.linspace(0, 2*np.pi, 20)), color='k')
 
-    plt.plot([b[0] for b in bins], [m[0] for m in means],
-             color=colours[i], label=r'{:2.2f}mk'.format(T))
-
-plt.legend()
+n = 20
+plt.xlim(n, -n)
+plt.ylim(-n, n)
+plt.grid()
 plt.tight_layout()
 plt.show()
+
+
+# fig = plt.figure(figsize=[12.2, 12.2])
+# plt.rc('font', family='serif')
+# plt.rc('xtick', labelsize='x-small')
+# plt.rc('ytick', labelsize='x-small')
+#
+# n_bins = 20
+# fBin = np.linspace(-np.pi, np.pi, num=n_bins+1)
+# bins = []
+# for i in range(n_bins):
+#     bins.append([fBin[i], fBin[i+1]])
+# width = 2*np.pi / n_bins
+#
+# num_plots = 9
+# radR = [[a, loc_imf.z.max()] for a in np.linspace(0, loc_imf.z.max(), num=num_plots+1)]
+# colours = [cm.rainbow(i) for i in np.linspace(0, 1, 5)]
+# for i, r in enumerate(radR[:-1]):
+#     ax = fig.add_subplot(3, 3, i+1, projection='polar')
+#     ax.set_theta_zero_location('N')
+#     ax.set_theta_direction(-1)
+#     ax.set_title(r'$Z_{{GSM}}: {0:0.1f} \rightarrow {1:0.1f}$'.format(r[0], r[1]))
+#
+#     for j, T in enumerate([20, 30, 40, 50, 60]):
+#         filter_by_temp = loc_imf[loc_imf.temp >= T]
+#         means = []
+#         for b in bins:
+#             binnable = filter_by_temp[filter_by_temp.z.between(r[0], r[1])].copy()
+#             binnable = binnable[binnable.theta.between(b[0], b[1])]
+#             means.append(len(binnable))
+#         print(means)
+#         ax.bar(fBin[:n_bins], means, width=width, bottom=0.0,
+#                edgecolor=colours[j], color='none', linewidth=2)
+#
+# plt.tight_layout()
+# plt.savefig('temp_hists.png')
