@@ -143,8 +143,8 @@ with Timer('Generating plot'):
         # print('doneBAR')
 
 plt.tight_layout()
-plt.savefig('python/code/prog_rept_plots/imf_radialHist/imf_radialHistGSM.png', dpi=300)
-
+# plt.savefig('python/code/prog_rept_plots/imf_radialHist/imf_radialHistGSM.png', dpi=300)
+plt.show()
 # dMean = loc_imf.groupby(pd.cut(loc_imf.z,
 #                        bins=pd.IntervalIndex.from_arrays(np.arange(11),
 #                                                          [loc_imf.z.max()]*11))).theta.agg([dirMean, resLen])
