@@ -2,17 +2,72 @@ import mphys as mp
 import logging
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from matplotlib import cm
+import matplotlib as mpl
+import seaborn as sns
+import scipy
 
-# url = "https://csa.esac.esa.int/csa/aio/product-action?"
-# months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-# DATASET_ID = 'DATASET_ID=C1_CP_CIS-HIA_ONBOARD_MOMENTS'
-# DELIVERY_FORMAT = '&DELIVERY_FORMAT=CDF_2_7'
-# CSACOOKIE = '&CSACOOKIE=21185F6025034F56792E7352233247497D257E477C394F6238091D6F7A0C52752A465F60251459717E0F02370B1B5C7524061D602846466A'
-# DELIVERY_INTERVAL = '&DELIVERY_INTERVAL=All'
-# for y in [2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010]:
-#     for i, m in enumerate(months):
-#         START_DATE = f"&START_DATE={y}-{i+1:02d}-01T00:00:00Z"
-#         END_DATE = f"&END_DATE={y}-{i+1:02d}-{m:02d}T23:59:59Z"
-#         with open('get.sh', 'a') as file:
-#             file.write("wget --content-disposition '"+url+DATASET_ID+START_DATE+END_DATE +
-#                        DELIVERY_FORMAT+DELIVERY_INTERVAL+CSACOOKIE+"'\n")
+years = [2, 11]
+months = [1, 13]
+dateRange = []
+for y in range(*years):
+    for m in range(*months):
+        dateRange.append([y, m])
+
+with mp.Timer('Whole Code.'):
+    moments = pd.read_csv('moments.csv',
+                          index_col=0, parse_dates=True)
+    # moments = mp.moments(dateRange)  # Regen moments data. Takes > 90s
+    # moments.to_csv('moments.csv')
+    # omni = mp.omni(dateRange)
+    pgp = mp.pgp(dateRange)
+
+    # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
+    data = pd.merge_asof(moments, pgp, left_index=True, right_index=True)
+    RE = 6371  # km
+    data.z = data.z / RE
+    data.x = data.x / RE
+    data.y = data.y / RE
+
+    fig = plt.figure(figsize=[6, 6])
+    plt.rc('font', family='serif')
+    plt.rc('xtick', labelsize='x-small')
+    plt.rc('ytick', labelsize='x-small')
+
+    # c = ['Blues', 'Greens', 'Oranges', 'Reds']
+    # for i, T in enumerate(np.linspace(20, 60, 4)):
+    #     filter_by_temp = data[data.temp >= T]
+    #     plt.hist2d(filter_by_temp.x, filter_by_temp.z, 20,
+    #                cmap=c[i], cmin=2, norm=mpl.colors.LogNorm(), label='{:2.1f}mK')
+    T = 20
+    data_filt = data[(data.temp >= T) & (data.y <= 5) &
+                     (data.y >= -5)].drop(columns=['y'])
+    print(data_filt.head())
+
+    n = 20
+    scale_x = data_filt.x.max() - data_filt.x.min()
+    scale_z = data_filt.z.max() - data_filt.z.min()
+    bin_width = 0.1  # Size of bins in Re
+    bins_x = scale_x // bin_width
+    bins_z = scale_z // bin_width
+    binned = scipy.stats.binned_statistic_2d(
+        data_filt.z, data_filt.x, data_filt.temp, bins=[bins_z, bins_x],
+        statistic='median')
+    plt.imshow(binned.statistic, extent=(data_filt.x.min(),
+                                         data_filt.x.max(),
+                                         data_filt.z.min(),
+                                         data_filt.z.max()),
+               interpolation='nearest', cmap='viridis', aspect='equal',
+               origin='lower', norm=mpl.colors.LogNorm())
+    plt.colorbar()
+
+    plt.plot(np.sin(np.linspace(0, 2*np.pi, 20)),
+             np.cos(np.linspace(0, 2*np.pi, 20)), color='k')
+
+    plt.xlim(n, -n)
+    plt.ylim(-n, n)
+    plt.grid()
+    plt.tight_layout()
+plt.show()
