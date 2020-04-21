@@ -12,11 +12,12 @@ from datetime import datetime as dt
 import datetime
 
 years = [2, 11]  # The range of years to get
-months = [7, 13]  # Months within year to get
+months = [7, 11]  # Months within year to get
 dateRange = []
 for y in range(*years):
     for m in range(*months):
-        dateRange.append([y, m])  # Make list of months & years
+        # years = [2, 11]  # The range of years to get
+        dateRange.append([y, m])
 
 with mp.Timer('Timing code'):
     moments = pd.read_csv('moments.csv',
@@ -45,30 +46,31 @@ with mp.Timer('Timing code'):
     NC = 6
     colours = [cmap(1.*i/NC) for i in range(NC)]
 
-    T = 10  # Temperature lower limit
+    T = 20  # Temperature lower limit
 
     for i, r in enumerate(range(0, 2*NC, 2)):
         data2 = data[(data.z > r) | (data.z < -r)]
-        data2 = data2[data2.index > dt(2005, 1, 1, 0, 0, 0)]
+        # data2 = data2[data2.index > dt(2005, 1, 1, 0, 0, 0)]
         # https://stackoverflow.com/q/24281936
         data2['tag'] = data2['temp'] > T
         fst = data2.index[data2.tag & ~ data2.tag.shift(1).fillna(False)]
         lst = data2.index[data2.tag & ~ data2.tag.shift(-1).fillna(False)]
 
-        fmtUrl = 'https://ssusi.jhuapl.edu/dataN/f16/apl/l1b/images/{0}/f16_StripDisk_{1}.png'
-        dates = [j-i for i, j in zip(fst, lst)]
+        # fmtUrl = 'https://ssusi.jhuapl.edu/dataN/f16/apl/l1b/images/{0}/f16_StripDisk_{1}.png'
+        dates = [j-i for i, j in zip(fst, lst)
+                 if j > i + pd.DateOffset(minutes=5)]
         # dates = [(fmtUrl.format(i.strftime("%Y/%j"),
         #                         i.strftime("%Y%j")),
         #           f"{i.strftime('%Y-%m-%d:%j')} for {str(j-i)}") for i, j in zip(fst, lst)
         #          if ((j >= i + pd.DateOffset(hours=1.5)) & (j <= i + pd.DateOffset(days=2)))]
         deltas = pd.DataFrame(dates)
-
+        print(deltas.describe())
         (deltas/pd.Timedelta(minutes=1)).hist(bins=range(1, 800, 15),
                                               ax=ax.reshape(-1)[i], color=colours[3],
-                                              label=f">{r} Re",
+                                              label=f"Count: {len(deltas)}",
                                               edgecolor='k', linewidth=1)
         ax.reshape(-1)[i].set_yscale('log')
-        ax.reshape(-1)[i].set_title(f">{r} Re")
+        ax.reshape(-1)[i].set_title(f"$>{r} R_e$")
         if i > 2:
             ax.reshape(-1)[i].set_xlabel("Duration (minutes)")
         if i % 3 == 0:
@@ -76,6 +78,7 @@ with mp.Timer('Timing code'):
                 f"(log) No. events with T>{T} MK")
         # ax.reshape(-1)[i].legend()
         ax.reshape(-1)[i].set_ylim([0, 2e3])
+        ax.reshape(-1)[i].legend()
 
 plt.tight_layout()
 plt.show()
