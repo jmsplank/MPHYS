@@ -71,7 +71,7 @@ def moments(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/MOMENTS'):
     return df
 
 
-def omni(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/OMNI'):
+def omni(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/OMNI', gsm=False):
     dates = [f"20{i[0]:02d}{i[1]:02d}" for i in dateRange]
     files = sorted(glob.glob(source+'/*.cdf'))
     filesRef = [s.split('/')[-1].split('_')[-2][:-2] for s in files]
@@ -84,9 +84,13 @@ def omni(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/OMNI'):
             logging.info(files[d])
             omni = cdflib.CDF(files[d])
             timetags = omni.varget('Epoch')
-            imf_z = omni.varget('BZ_GSE')
             imf_x = omni.varget('BX_GSE')
-            imf_y = omni.varget('BY_GSE')
+            if gsm:
+                imf_z = omni.varget('BZ_GSM')
+                imf_y = omni.varget('BY_GSM')
+            else:
+                imf_z = omni.varget('BZ_GSE')
+                imf_y = omni.varget('BY_GSE')
             time = cdflib.cdfepoch.unixtime(timetags)
             time = [dt.datetime.utcfromtimestamp(t) for t in time]
             imf_month = pd.DataFrame(np.column_stack([time, imf_x, imf_y, imf_z]),
@@ -106,7 +110,7 @@ def omni(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/OMNI'):
     return df
 
 
-def pgp(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/PGP'):
+def pgp(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/PGP', gsm=False):
     dates = [f"20{i[0]:02d}{i[1]:02d}" for i in dateRange]
     files = sorted(glob.glob(source+'/*.cdf'))
     filesRef = [s.split('/')[-1].split('_')[-2][:-2] for s in files]
@@ -120,6 +124,10 @@ def pgp(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/PGP'):
             pgp = cdflib.CDF(files[d])
             timetags = pgp.varget('Epoch__CL_JP_PGP')
             pos = pgp.varget('sc_r_xyz_gse__CL_JP_PGP')
+            if gsm:
+                conv = pgp.varget('gse_gsm__CL_JP_PGP')
+                pos[:, 1] *= np.cos(np.radians(-conv))
+                pos[:, 2] *= np.cos(np.radians(-conv))
             time = cdflib.cdfepoch.unixtime(timetags)
             time = [dt.datetime.utcfromtimestamp(t) for t in time]
             locations_month = pd.DataFrame(np.column_stack(

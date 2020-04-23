@@ -25,7 +25,7 @@ with mp.Timer('Timing code'):
     # moments = mp.moments(dateRange)  # Regen moments data. Takes > 90s
     # moments.to_csv('moments.csv')
     # omni = mp.omni(dateRange)
-    pgp = mp.pgp(dateRange)  # Get predicted geometric position
+    pgp = mp.pgp(dateRange, gsm=True)  # Get predicted geometric position
 
     # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
     data = pd.merge_asof(moments, pgp, left_index=True, right_index=True)

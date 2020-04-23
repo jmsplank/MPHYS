@@ -23,11 +23,11 @@ with mp.Timer('Timing code'):
                           index_col=0, parse_dates=True)
     # moments = mp.moments(dateRange)  # Regen moments data. Takes > 90s
     # moments.to_csv('moments.csv')
-    omni = pd.read_csv('omni.csv',
-                       index_col=0, parse_dates=True)
-    # omni = mp.omni(dateRange)
-    # omni.to_csv('omni.csv')
-    pgp = mp.pgp(dateRange)  # Get predicted geometric position
+    # omni = pd.read_csv('omni.csv',
+    #                    index_col=0, parse_dates=True)
+    omni = mp.omni(dateRange, gsm=True)
+    omni.to_csv('omni.csv')
+    pgp = mp.pgp(dateRange, gsm=True)  # Get predicted geometric position
 
     # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
     data = pd.merge_asof(moments, pgp, left_index=True, right_index=True)
