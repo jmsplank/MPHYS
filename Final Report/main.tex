@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[a4paper, margin=2cm]{geometry}
 \usepackage{multicol, caption}
@@ -51,9 +51,9 @@
 \author[1]{J. Plank}
 \author[2]{R. C. Fear}
 \affil[1, 2]{Department of Physics and Astronomy, University of Southampton}
-\date{April 15, 2020}
+\date{April 2020}
 
-\begin{document}
+\begin{document}\sloppy
 % TITLE BLOCK
 \maketitle
 
@@ -98,8 +98,9 @@ Figure \ref{fig:plasmasphere} is a representation of the solar-terrestrial envir
 \end{Figure}
 
 
-Write more...
-
+Write more... 
+- Something about GSM coords
+- Reconnection
 
 \section{OBSERVATIONS}
 The majority of observations in this report come from Cluster, a group of four satellites built by ESA and launched in pairs on Soyuz rockets from Baikonur on the 16th July and 9th August 2000. They fly in a 57hr elliptical polar orbit and are arranged in a tetrahedron formation with a separation of between a few hundred and a few thousand km.
@@ -160,16 +161,16 @@ We can see from Figure \ref{fig:tempLocations} that the plasma sheet ends at app
 In figure \ref{fig:avg_temp_z} we created a box plot of measurements from July-October 2002-2010 (for $X_{GSM} < 0$, i.e. excluding points sunwards of Earth). Taking the estimation from above that the plasma sheet ends at $\approx6R_e$, we can see from the box centred on $5.5R_e$ that temperatures exceeding $\approx 20MK$ can reasonably be considered uncharacteristically high.
 
 \subsection{Duration of events}
-The event analysed by Fear \textit{et al} \cite{Fear1506} on 15-09-2005 lasted for approximately 2 hours. In figure \ref{fig:aur_comp} we analyse the length of each event detected in the same time period as above (Jul-Oct 2002-2010), plotting the result as a histogram. Repeating this for various cutoff points based on $|Z_{GSM}|$ gives a view of how the length of each event changes over time. 
+The event analysed by Fear \textit{et al} \cite{Fear1506} on 15-09-2005 lasted for approximately 2 hours. In figure \ref{fig:aur_comp} we analyse the length of each of our events detected in the same time period as above (Jul-Oct 2002-2010), plotting the result as a histogram. Repeating this for various cutoff points based on $|Z_{GSM}|$ gives a view of how the length of each event changes over time. 
 
 \begin{Figure}
     \centering
     \includegraphics[width=\textwidth]{aur_comp.png}
-    \captionof{figure}{Histograms showing the number of events with a certain duration (in minutes). Each panel shows a different cutoff point for $|Z_{GSM}|$. Very long duration events are consistent with passing through the plasma sheet where having a temperature above $20MK$ for over 10 hours is possible. Therefore as the $Z$ cutoff is increased we would expect those long duration events to become less common as measurements outside of the plasma sheet are excluded. What is left is $843$ (see $>6 R_e$ panel) high temperature events occurring outside the region where they are expected.}
+    \captionof{figure}{Histograms showing the number of events with a certain duration (in minutes). Each panel shows a different cutoff point for $|Z_{GSM}|$. Very long duration events are consistent with passing through the plasma sheet where having a temperature above $20MK$ for over 10 hours is possible. Therefore as the $Z$ cutoff is increased we would expect those long duration events to become less common as measurements outside of the plasma sheet are excluded. What is left is $732$ (see $>6 R_e$ panel) high temperature events occurring outside the region where they are expected.}
     \label{fig:aur_comp}
 \end{Figure}
 
-We see that when the plasma sheet is excluded by excluding results where $|Z_{GSM}|<6R_e$, there are 843 events left. The properties of this distribution are shown in table \ref{tab:event_durn}. This shows that these events are comparable in length to the 15-09-2005 event.
+We see that when the plasma sheet is excluded by excluding results where $|Z_{GSM}|<6R_e$, there are $732$ events left. This works out to be just under one per day ($732/984\approx0.75\ events/day$). The properties of this distribution are shown in table \ref{tab:event_durn}. This shows that these events are comparable in length to the 15-09-2005 event.
 
 Many short duration events are likely to be noise. Although cluster makes a full rotation approximately every three seconds and can therefore provide measurements with similar resolution, the choice was made to average the data into five minute bins, which would match with the predicted geometric position data from \cite{cdms}, and the IMF components parameters obtained from NASA/GSFC's OMNI data set through OMNIWeb \cite{omniData}.
 
@@ -178,10 +179,10 @@ Many short duration events are likely to be noise. Although cluster makes a full
         \centering
         \begin{tabular}{||c|l||c|l||}
             \hline
-            count & 843 & $25\%$ & 00:15:00 \\
-            mean & 01:10:47 & $50\%$ & 00:25:00 \\
-            std & 03:02:09 & $75\%$ & 01:00:00 \\
-            min & 00:10:00 & max & 1 day 03:25:00 \\
+            count & 732 & $25\%$ & 00:15:00 \\
+            mean & 01:16:18 & $50\%$ & 00:25:00 \\
+            std & 03:38:36 & $75\%$ & 01:00:00 \\
+            min & 00:10:00 & max & 1 day 12:40:00 \\
             \hline
         \end{tabular}
     \end{minipage}\hfill
@@ -191,13 +192,16 @@ Many short duration events are likely to be noise. Although cluster makes a full
     \end{minipage}
 \end{table}
 
+\subsection{The Interplanetary Magnetic Field}
+The IMF data consists of three measurements from OMNI, $B_x, B_y, B_z$, all in the GSM coordinate system. 
+
 \section{RESULTS}
 
 \section{DISCUSSION}
 HI
 
 \section{CONCLUSION: FUTURE WORK}
-HI
+HI \\
 
 \printbibliography
 % \end{multicols}
