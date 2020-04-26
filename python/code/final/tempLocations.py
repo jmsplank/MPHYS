@@ -23,8 +23,12 @@ with mp.Timer('Timing code'):
                           index_col=0, parse_dates=True)
     # moments = mp.moments(dateRange)  # Regen moments data. Takes > 90s
     # moments.to_csv('moments2.csv')
-    omni = mp.omni(dateRange, gsm=True)
-    pgp = mp.pgp(dateRange, gsm=True)  # Get predicted geometric position
+    # omni = mp.omni(dateRange, gsm=True)
+    omni = pd.read_csv('omni2.csv',
+                       index_col=0, parse_dates=True)
+    # pgp = mp.pgp(dateRange, gsm=True)  # Get predicted geometric position
+    pgp = pd.read_csv('pgp2.csv',
+                      index_col=0, parse_dates=True)
 
     # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
     data = pd.merge_asof(moments, pgp, left_index=True, right_index=True)
@@ -46,12 +50,13 @@ with mp.Timer('Timing code'):
     #  (data.y >= -yCut)]
     # data_filt = data[(data.temp >= T)].drop(columns=['y'])
     data_filt = data[data.temp > 0]
+    # data_filt = data_filt[data_filt.y.abs() < 8]
     # print(data_filt.head())
 
     n = 20  # Bounds of plot in Re
     scale_x = data_filt.x.max() - data_filt.x.min()  # Width of x
     scale_z = data_filt.z.max() - data_filt.z.min()  # Width of z
-    bin_width = 1  # Size of bins in Re
+    bin_width = 2.5  # Size of bins in Re
     bins_x = scale_x // bin_width
     bins_z = scale_z // bin_width
 
@@ -59,18 +64,18 @@ with mp.Timer('Timing code'):
     binned_all = scipy.stats.binned_statistic_2d(
         data_filt.z, data_filt.x, data_filt.temp, bins=[bins_z, bins_x],
         statistic='mean')
-    # data_filt = data_filt[data_filt.bz > 0]
-    # binned_north = scipy.stats.binned_statistic_2d(
-    # data_filt.z, data_filt.x, data_filt.temp, bins=[bins_z, bins_x],
-    # statistic='mean')
-    # stat = binned_north.statistic - binned_all.statistic
+    data_filt = data_filt[data_filt.bz > 0]
+    binned_north = scipy.stats.binned_statistic_2d(
+        data_filt.z, data_filt.x, data_filt.temp, bins=[bins_z, bins_x],
+        statistic='mean')
+    stat = binned_north.statistic - binned_all.statistic
     # Plot binned data. binned doesn't hold abs pos data so specify extents
-    cm = ax.imshow(binned_all.statistic, extent=(data_filt.x.min(),
-                                                 data_filt.x.max(),
-                                                 data_filt.z.min(),
-                                                 data_filt.z.max()),
-                   interpolation='nearest', cmap='rainbow', aspect='equal',
-                   origin='lower', vmin=0, vmax=45)
+    cm = ax.imshow(stat, extent=(data_filt.x.min(),
+                                 data_filt.x.max(),
+                                 data_filt.z.min(),
+                                 data_filt.z.max()),
+                   interpolation='nearest', cmap='seismic', aspect='equal',
+                   origin='lower', vmin=-4, vmax=4)
     # ax.colorbar()  # Show colourbar
     divider = make_axes_locatable(ax)
     cax = divider.append_axes('right', size='5%', pad=.1)
