@@ -25,15 +25,15 @@ with mp.Timer('Timing code'):
     moments = pd.read_csv('moments.csv',
                           index_col=0, parse_dates=True)
 
-    # omni = mp.omni(dateRange)
-    # omni.to_csv('omni.csv')
-    omni = pd.read_csv('omniGSE.csv',
-                       index_col=0, parse_dates=True)
+    omni = mp.omni(dateRange)
+    omni.to_csv('omni.csv')
+    # omni = pd.read_csv('omniGSE.csv',
+    #    index_col=0, parse_dates=True)
 
-    # pgp = mp.pgp(dateRange)  # Get predicted geometric position
-    # pgp.to_csv('pgp.csv')
-    pgp = pd.read_csv('pgpGSE.csv',
-                      index_col=0, parse_dates=True)
+    pgp = mp.pgp(dateRange)  # Get predicted geometric position
+    pgp.to_csv('pgp.csv')
+    # pgp = pd.read_csv('pgpGSE.csv',
+    #   index_col=0, parse_dates=True)
 
     # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
     data = pd.merge_asof(moments, pgp, left_index=True, right_index=True)
