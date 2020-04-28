@@ -95,12 +95,20 @@ def omni(dateRange, source='/home/james/Documents/MPHYS_ARCHIVE/OMNI', gsm=False
             time = [dt.datetime.utcfromtimestamp(t) for t in time]
             imf_month = pd.DataFrame(np.column_stack([time, imf_x, imf_y, imf_z]),
                                      columns=['time', 'bx', 'by', 'bz'])
+            # imf_month.bx = imf_month.bx.mask(
+            #     imf_month.bx > 1000).interpolate().astype('float')
+            # imf_month.by = imf_month.by.mask(
+            #     imf_month.by > 1000).interpolate().astype('float')
+            # imf_month.bz = imf_month.bz.mask(
+            #     imf_month.bz > 1000).interpolate().astype('float')
+
             imf_month.bx = imf_month.bx.mask(
-                imf_month.bx > 1000).interpolate().astype('float')
+                imf_month.bx > 1000).astype('float')
             imf_month.by = imf_month.by.mask(
-                imf_month.by > 1000).interpolate().astype('float')
+                imf_month.by > 1000).astype('float')
             imf_month.bz = imf_month.bz.mask(
-                imf_month.bz > 1000).interpolate().astype('float')
+                imf_month.bz > 1000).astype('float')
+
             imf_month.dropna(inplace=True)
             imf_month = imf_month.set_index('time')
             imf_month = imf_month.resample("5T").mean()
