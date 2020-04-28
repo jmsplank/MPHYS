@@ -97,10 +97,70 @@ Figure \ref{fig:plasmasphere} is a representation of the solar-terrestrial envir
     \end{minipage}
 \end{Figure}
 
+\subsection{Coordinate Systems}
+Geocentric Solar Ecliptic (GSE) and Geocentric Solar Magnetic (GSM) are two similar coordinate systems used when studying the magnetosphere. Both have the Earth as the origin, and $+X$ pointing towards the sun. In GSE, $+Z$ is pointed perpendicularly upwards from the plane of Earth's orbit around the Sun. In GSM, $Z$ is the projection of Earth's magnetic dipole axis onto the plane perpendicular to $X$, with positive pointing north.
 
-Write more... 
-- Something about GSM coords
-- Reconnection
+\begin{Figure}
+    \begin{minipage}[c]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{GSE.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{GSM.png}
+    \end{minipage}
+    \captionof{figure}{The GSE (left) and GSM (right) coordinate systems. Image credit: \cite{taiwanergdatacenter}.}
+\end{Figure}
+
+\subsection{The Interplanetary Magnetic Field}
+Magnetic field lines are said to be ``frozen in`` to the solar wind plasma, the IMF is carried into the interplanetary region of space by solar wind from the sun. The mechanism for this is known as Alfvén's theorem, first proposed in 1942 \cite{alfven_1942}. 
+
+DERIVE FROZEN-IN!
+
+Because of the rotation of the sun, solar wind (along with IMF) follows a spiral pattern similar to that produced by droplets of water as a wet tennis ball is thrown into the air with rapid spin. These field lines are `open`, i.e. they have an origin, but instead of returning to a corresponding region at the opposite pole, extend indefinitely into space \cite{imfUptoLat16}. 
+
+At the Sun's magnetic equator, field lines originating from the north and south hemispheres run parallel to each other but are oppositely directed - creating a thin current sheet known as the ``Heliospheric current sheet``. This sheet is twisted and warped due to the difference in rotational and magnetic axes and a quadrupole moment in the sun's magnetic field - it also has a spiral shape of the same form as described above \cite{alfven_1942, ParkerSpiral}.
+
+Since the orbital plane of the Earth is located almost along the rotation axis of the sun, we experience regular shifts in the direction of flow of the IMF because the heliospheric current sheet is sometimes above and sometimes below the planet. 
+
+When the IMF has a southward component, the northward pointing terrestrial field lines are allowed to merge in a process known as reconnection. However, when the IMF is northward, the structure of the magnetosphere is not well understood \cite{Fear1506}.
+
+\subsection{Reconnection and Aurora}
+The auroral lights, pictured in Fig.\ref{fig:auroraPic}, are a result of charged particles from the sun being accelerated towards the ionosphere - Earth's upper atmosphere - where they collide with gas molecules, each molecule causing a different colour to be emitted. 
+E.g. Green (the most common colour) is caused by collisions with atomic oxygen ($557.7 nm$) \cite{hollier, BSPP}. Intense aurora will have an emission rate of several million Rayleigh ($1R=10^6 photons/cm^2s$) and most often appear as east-west aligned bands known as auroral arcs \cite{BSPP}.
+
+\begin{Figure}
+    \begin{minipage}[c]{0.67\textwidth}
+        \centering
+        \includegraphics[width=0.8\linewidth]{nothernLights.jpg}
+    \end{minipage}
+    \begin{minipage}[c]{0.3\textwidth}
+        \captionof{figure}{The Aurora Borealis, photographed in 2015 \cite{torino071_2015}.}
+        \label{fig:auroraPic}
+    \end{minipage}
+\end{Figure}
+
+Reconnection is a process that allows magnetic fields from separate domains to become joined to one another. When IMF is southward, reconnection occurs in a smooth cycle known as the Dungey cycle \cite{dungeyCycle} which is explained in Fig.\ref{fig:dungey}. Aurora is observed at latitudes of approximately $70^{\circ}$ because that is the boundary between the closed lines and the open ones at the polar cap (lobe).
+
+\begin{Figure}
+    \centering
+    \includegraphics[width=0.6\linewidth]{dungeyCycle.png}
+    \captionof{figure}{Sketch of the Dungey cycle. The IMF is assumed to be coming from the left. On the right hand side of the diagram, magnetotail reconnection is happening. Open field lines are being compressed together, eventually joining to form a closed field line that `snaps back` towards Earth, the reconnection happens typically at a radius of $\approx100R_e$. Heating and acceleration of the plasma occurs as the newly created closed field line rapidly shortens in length. The magnetic flux will then flow around to the dayside of the planet (LHS of the sketch) where it gets pushed up against the solar wind. Once again, this pressure eventually reaches a point where the field lines of the IMF and the terrestrial field merge, creating an open line with its foot on the polar cap. This line gets pushed back over to the night-side of the planet where magnetotail reconnection can happen once again (Sketch from \cite{dungeyCycle}).}
+    \label{fig:dungey}
+\end{Figure}
+
+Aurora at very high latitudes are rare, but can occur in an event known as a transpolar arc \cite{polarAurora1, polarAurora2} (see figure \ref{fig:TPA}). There is much debate on their formation, one theory for their formation was proposed by Milan et al in \cite{TPAdebate}, where magnetic flux in the magnetotail lobes - the open field line region that maps down to the polar cap - reconnects but is trapped in the magnetotail. Transpolar arcs occur when the IMF is northward, which would explain why flux gets trapped in the magnetotail, there is a blockage created because dayside reconnection cannot occur.
+
+\begin{Figure}
+    \begin{minipage}[c]{0.4\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{transpolar_arc.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.57\textwidth}
+        \captionof{figure}{An example of a transpolar arc observed by Fear and Milan \cite{Fear2012TheID}. Dayglow is visible at the top of the image, the auroral oval is also visible as a circle in the centre of the image. The transpolar arc is the thin red band that stretches from the night side of the planet (bottom) into the polar cap region. An observer standing underneath a transpolar arc and looking up would see something that looks just like the normal aurora. The only significant difference is they are standing at a latitude that under normal circumstances would be far too high to see any aurora.}
+        \label{fig:TPA}
+    \end{minipage}
+\end{Figure}
 
 \section{OBSERVATIONS}
 The majority of observations in this report come from Cluster, a group of four satellites built by ESA and launched in pairs on Soyuz rockets from Baikonur on the 16th July and 9th August 2000. They fly in a 57hr elliptical polar orbit and are arranged in a tetrahedron formation with a separation of between a few hundred and a few thousand km.
@@ -111,11 +171,11 @@ The orbit of cluster varies throughout the year. For significant portions of the
 Figure \ref{fig:ClusterPos} shows Cluster's orbit through the month of September 2005 as an example, it does not cross the predicted magnetopause boundary (outer dotted parabola). Cluster will also cross through the plasmasphere in every orbit. This leaves the grey shaded region as the area of interest.
 
 \begin{Figure}
-    \begin{minipage}[c]{0.57\textwidth}
-        \centering
-        \includegraphics[width=0.7\textwidth]{sc_pos_09_05_coloured.png}
-    \end{minipage}\hfill
     \begin{minipage}[c]{0.4\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{sc_pos_09_05_coloured.png}
+    \end{minipage}\hfill
+    \begin{minipage}[c]{0.57\textwidth}
         \captionof{figure}{Plot of Cluster's orbit throughout September 2005 (solid), along with model results for the magnetopause and open-closed boundary on 15/09/2005 (dotted) \cite{Fear1506, substormConfModel}. The grey shaded region is of interest as it contains open field lines. If a reconnection event was detected while the spacecraft was in this region then it could indicate a transpolar arc. Plotting is done in the GSM coordinate system, where +X points to the sun and +Z points along the magnetic dipole axis.}
         \label{fig:ClusterPos}
     \end{minipage}
@@ -160,7 +220,7 @@ We can see from Figure \ref{fig:tempLocations} that the plasma sheet ends at app
 
 In figure \ref{fig:avg_temp_z} we created a box plot of measurements from July-October 2002-2010 (for $X_{GSM} < 0$, i.e. excluding points sunwards of Earth). Taking the estimation from above that the plasma sheet ends at $\approx6R_e$, we can see from the box centred on $5.5R_e$ that temperatures exceeding $\approx 20MK$ can reasonably be considered uncharacteristically high.
 
-\subsection{Duration of events}
+\subsection{Duration of events \label{ssec:DURn}}
 The event analysed by Fear \textit{et al} \cite{Fear1506} on 15-09-2005 lasted for approximately 2 hours. In figure \ref{fig:aur_comp} we analyse the length of each of our events detected in the same time period as above (Jul-Oct 2002-2010), plotting the result as a histogram. Repeating this for various cutoff points based on $|Z_{GSM}|$ gives a view of how the length of each event changes over time. 
 
 \begin{Figure}
@@ -192,10 +252,24 @@ Many short duration events are likely to be noise. Although cluster makes a full
     \end{minipage}
 \end{table}
 
-\subsection{The Interplanetary Magnetic Field}
-The IMF data consists of three measurements from OMNI, $B_x, B_y, B_z$, all in the GSM coordinate system. 
+\subsection{Interplanetary Magnetic Field}
+The IMF data consists of three measurements from OMNI, $B_x, B_y, B_z$, all in the GSM coordinate system.
+
+$B_z$ represents the IMF polarity, positive northwards and negative southwards. For the time range that we have been considering, the average bz was:
+
+\begin{equation}
+    \overline{B_z} = 0.004 \pm 3.275\ nT
+\end{equation}
+
+Therefore it was effectively 50\% positive and 50\% negative. 
 
 \section{RESULTS}
+
+\subsection{Connection to Transpolar Arcs}
+By comparing the time an event happened along with its duration, it is possible to compare temperatures in the lobe with images of the auroral oval. As shown in section \ref{ssec:DURn}, there were 732 observed events with a temperature of over $20MK$. These can be filtered further to exclude all events with a duration less than 1.5 hours. 
+
+This is to align with observations from SSUSI, an instrument carried on Defense Meteorological Satellite Program (DMSP) satellites that has been taking images of the auroral oval every 100 minutes since 2005. 
+
 
 \section{DISCUSSION}
 HI
