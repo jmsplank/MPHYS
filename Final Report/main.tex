@@ -263,14 +263,63 @@ $B_z$ represents the IMF polarity, positive northwards and negative southwards. 
 
 Therefore it was effectively 50\% positive and 50\% negative. 
 
+\section{Effect of IMF direction on temperature distribution}
+Figure \ref{fig:imfDiff} shows the difference between the average temperature distribution (figure \ref{fig:tempLocations}) and an equivalent average when IMF is only northwards. Redder represents an increase in average temperature when IMF is northwards and blue is a decrease.
+
+The interplanetary magnetic field is highly variable which has caused problems with high standard deviation throughout this project, for figure \ref{fig:imfDiff} this has resulted in a lot of noise. However, some notable features are visible. The plasma sheet is cooler during times of northward IMF, this is consistent with previous studies \cite{TAYLOR20081619} saying that the plasma sheet becomes colder and denser during extended times of northward IMF, known as the cold dense plasma sheet (CDPS).
+
+It is also theorised that the plasma sheet expands vertically during northward IMF \cite{huang, nishida}, which could explain the increase in temperature outside of the plasma sheet.
+
+\begin{Figure}
+    \begin{minipage}[c]{0.57\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{tempLocations_IMFdiff.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.4\textwidth}
+        \captionof{figure}{Difference plot of average temperature distribution (figure \ref{fig:tempLocations} compared to distribution when IMF is northward. Red indicates a higher average temperature during northward IMF and blue indicated colder. The IMF is highly variable, resulting in a lot of noise, however a decrease in temperature inside the plasma sheet and an increase above and below are still visible. This confirms other direct measurements of the plasma sheet boundary expanding vertically \cite{huang, nishida} and of the cold-dense plasma sheet formation during northward IMF. }
+        \label{fig:imfDiff}
+    \end{minipage}
+\end{Figure}
+
 \section{RESULTS}
 
+\subsection{Relationship between Z and IMF direction}
+If high temperatures in the lobe are caused by times of northward IMF, then we should see that the average IMF $B_Z$ increases with $Z$. 
+
+
+
+
 \subsection{Connection to Transpolar Arcs}
-By comparing the time an event happened along with its duration, it is possible to compare temperatures in the lobe with images of the auroral oval. As shown in section \ref{ssec:DURn}, there were 732 observed events with a temperature of over $20MK$. These can be filtered further to exclude all events with a duration less than 1.5 hours. 
+It is possible to compare temperatures in the lobe with images of the auroral oval. As shown in section \ref{ssec:DURn}, there were 732 observed events with a temperature of over $20MK$. These can be filtered further to exclude all events with a duration less than 1.5 hours. 
 
 This is to align with observations from SSUSI, an instrument carried on Defense Meteorological Satellite Program (DMSP) satellites that has been taking images of the auroral oval every 100 minutes since 2005. 
 
+Computing power and internet bandwidth were limited during this project, so a full an exhaustive search of all SSUSI instrument data was not possible. Instead, we chose to limit to the F16 dataset only.
 
+Finding a way to classify transpolar arcs automatically proved to also be beyond the scope of this project, though it would be a very interesting future extension. There is simply too much going on in the auroral oval to create an unsupervised machine learning model that distinguishes between an image of the oval that has a TPA and one that does not. A supervised model would be more useful in this instance, however a requirement for supervised learning is to have a labelled dataset to train/test on. This presents two problems:
+
+The first is scarcity of data, there is a maximum of approximately $27,000$ images available from F16 orbits from 2005-2010 assuming F16 completes 15 orbits per day. Transpolar arcs are relatively rare, when labelling a small random sample of 100 images we found 12 that contained convincing transpolar arcs. Assuming that estimate is true for the entire sample, this leaves $3240$ images that contain a transpolar arc. Since we are trying to make a binary classification (does/doesn't have a TPA visible) and the training data needs to be balanced so that biases are not introduced, that leaves a training set of $6480$ images. The general ballpark figure for the size of supervised learning training datasets is $100,000-1,000,000$ images.
+
+The second problem is practicality. Since this project is intended to be an analysis of data that has already been captured, it is pointless to label all historical data manually for the purposes of creating a machine learning model, as it is the labelling itself that is the goal. Though it would be useful for classifying data from future orbits.
+
+Therefore, by filtering our high-temperature events to exclude events with a duration $< 1.5$ hours and with a height $\ge\pm7R_e$ we are left with 56 events. This is a manageable number of events to manually investigate. F16 data is organised into per-orbit files approximately 85MB in size. Downloading and analysing a file of that size with the limitations mentioned above is still to much. However, per-day quicklook plots are also available which are typically under 1MB. 
+
+By searching for the date and time of one of the 56 high-temperature events and visually inspecting the quicklook we were able to make a judgement on whether or not there was a transpolar arc during this time.
+
+\begin{Figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{tpa.png}
+    \captionof{figure}{High-temperature events, a black cross shows an event where SSUSI observations did not capture a TPA, red crosses show where a TPA was observed at some point in the duration of the event. The green line is a linear fit to all the data, red line is to just events with a transpolar arc. In both cases, the best fit line is negative. This is significant because it suggests that these events are not linked to northward IMF.}
+    \label{fig:tpa}
+\end{Figure}
+
+As shown in figure \ref{fig:tpa}, there was a total of 28 events that had an observed arc (exactly 50\%, 15 had IMF $> 0$). It is important to consider that SSUSI instruments do not have a wide enough field of view to capture the entire auroral oval in one pass, and that it is only over the oval for a short period of time. Also, in most cases, dayglow causes the oval at the north pole to be almost entirely obscured. This could potentially explain why there were some high-temperature events without an associated arc.
+
+This sample size is relatively small and could be expanded upon easily by lowering the minimum acceptable length for an event. The current limit of 1.5 hours was chosen so that the F16 satellite has enough time to pass over both poles which should increase the likelihood of a TPA being observed.
+
+However, an arc being visible in 50\% of cases does suggest a link between high-temperatures in the lobe and the formation of transpolar arcs, as it is well above the estimate quoted above of 12\%. 
+
+There were also a large number of transpolar arcs spotted by SSUSI that were not detected by Cluster. This is easily explained by the fact that Cluster is very small and the lobe is very big, it is very likely that Cluster was just in the wrong place to be able to see it.
 \section{DISCUSSION}
 HI
 
