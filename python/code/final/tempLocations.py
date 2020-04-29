@@ -23,11 +23,13 @@ with mp.Timer('Timing code'):
                           index_col=0, parse_dates=True)
     # moments = mp.moments(dateRange)  # Regen moments data. Takes > 90s
     # moments.to_csv('moments2.csv')
-    # omni = mp.omni(dateRange, gsm=True)
-    omni = pd.read_csv('omni2.csv',
+    # omni = mp.omni(dateRange)
+    # omni.to_csv('omniGSE_Extended.csv')
+    omni = pd.read_csv('omniGSE_Extended.csv',
                        index_col=0, parse_dates=True)
-    # pgp = mp.pgp(dateRange, gsm=True)  # Get predicted geometric position
-    pgp = pd.read_csv('pgp2.csv',
+    # pgp = mp.pgp(dateRange)  # Get predicted geometric position
+    # pgp.to_csv('pgpGSE_Extended.csv')
+    pgp = pd.read_csv('pgpGSE_Extended.csv',
                       index_col=0, parse_dates=True)
 
     # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
@@ -55,27 +57,27 @@ with mp.Timer('Timing code'):
 
     n = 20  # Bounds of plot in Re
     scale_x = data_filt.x.max() - data_filt.x.min()  # Width of x
-    scale_z = data_filt.z.max() - data_filt.z.min()  # Width of z
+    scale_y = data_filt.y.max() - data_filt.y.min()  # Width of y
     bin_width = 2.5  # Size of bins in Re
     bins_x = scale_x // bin_width
-    bins_z = scale_z // bin_width
+    bins_y = scale_y // bin_width
 
     # Bin the data. Returns 2d array of median temperature values
     binned_all = scipy.stats.binned_statistic_2d(
-        data_filt.z, data_filt.x, data_filt.temp, bins=[bins_z, bins_x],
+        data_filt.y, data_filt.x, data_filt.temp, bins=[bins_y, bins_x],
         statistic='mean')
     data_filt = data_filt[data_filt.bz > 0]
     binned_north = scipy.stats.binned_statistic_2d(
-        data_filt.z, data_filt.x, data_filt.temp, bins=[bins_z, bins_x],
+        data_filt.y, data_filt.x, data_filt.temp, bins=[bins_y, bins_x],
         statistic='mean')
     stat = binned_north.statistic - binned_all.statistic
     # Plot binned data. binned doesn't hold abs pos data so specify extents
     cm = ax.imshow(stat, extent=(data_filt.x.min(),
                                  data_filt.x.max(),
-                                 data_filt.z.min(),
-                                 data_filt.z.max()),
+                                 data_filt.y.min(),
+                                 data_filt.y.max()),
                    interpolation='nearest', cmap='seismic', aspect='equal',
-                   origin='lower', vmin=-4, vmax=4)
+                   origin='lower', vmin=-2, vmax=2)
     # ax.colorbar()  # Show colourbar
     divider = make_axes_locatable(ax)
     cax = divider.append_axes('right', size='5%', pad=.1)
@@ -86,9 +88,9 @@ with mp.Timer('Timing code'):
 
     ax.set_xlim(n, -n)  # Flip axis. +x points to Sun
     ax.set_ylim(-n, n)
-    ax.set_xlabel(r'$X_{GSM} (R_e)$')
-    ax.set_ylabel(r'$Z_{GSM} (R_e)$')
-    cb.set_label(r'Ion temperature (MK)')
+    ax.set_xlabel(r'$X_{GSE} (R_e)$')
+    ax.set_ylabel(r'$Y_{GSE} (R_e)$')
+    cb.set_label(r'Ion temperature difference (MK)')
     ax.grid()
     plt.tight_layout()
 plt.show()
