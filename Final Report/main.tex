@@ -19,6 +19,7 @@
 \usepackage{hyperref}% add hypertext capabilities
 \usepackage{minted}
 \usepackage[autostyle]{csquotes}
+\usepackage{wrapfig}
 
 \usepackage[backend=biber,style=numeric]{biblatex}
 \addbibresource{bib.bib}
@@ -41,6 +42,17 @@
 
 % CUSTOM NAMING
 \renewcommand*\contentsname{Summary}
+
+% CUSTOM FIGURES
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\newcommand{\incfig}[2][1]{
+    \def\svgwidth{#1\textwidth}
+    \input{#2.pdf_tex}
+}
+
 
 \newenvironment{Figure}
   {\par\medskip\noindent\minipage{\linewidth}}
@@ -115,7 +127,68 @@ Geocentric Solar Ecliptic (GSE) and Geocentric Solar Magnetic (GSM) are two simi
 \subsection{The Interplanetary Magnetic Field}
 Magnetic field lines are said to be ``frozen in`` to the solar wind plasma, the IMF is carried into the interplanetary region of space by solar wind from the sun. The mechanism for this is known as Alfvén's theorem, first proposed in 1942 \cite{alfven_1942}. 
 
-DERIVE FROZEN-IN!
+Frozen-in flux/flow occurs when the magnetic Reynolds number is much greater than 1.
+
+Magnetohydrodynamic induction equation:
+\begin{align}
+    \frac{\partial \textbf{B}}{\partial t} &= \nabla \times (\textbf{V}\times\textbf{B})+\frac{1}{\mu_0\sigma}\nabla^2\textbf{B}
+\end{align}
+
+Where the first term is the convective term and the second is diffusive. The magnetic Reynolds number $R_m$:
+\begin{align}
+    R_m&=\frac{\text{Convective term}}{\text{Diffusive term}} \nonumber\\
+    &=\frac{|\nabla\times(\textbf{V}\times\textbf{B})|}{|\nabla^2\textbf{B}/\mu_0\sigma|}
+\end{align}
+
+Therefore if $R_m>1$ then the convective term dominates and if $R_m<1$ the diffusive term dominates. In the convective limit (when $R_m>>1$) then:
+\begin{equation}
+    \frac{\partial\textbf{B}}{\partial t}=\nabla\times(\textbf{V}\times\textbf{B})
+    \label{eq:convLim}
+\end{equation}
+
+Faraday's law states that $\partial\textbf{B}/\partial t=-\nabla\times\textbf{E}$, so in the convective limit:
+\begin{equation}
+    \textbf{E}=-\textbf{V}\times\textbf{B}
+\end{equation}
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \hspace{1.5cm}
+    \vspace{-5mm}
+    \incfig[0.38]{frozen-in}
+    \vspace{5mm}
+\end{wrapfigure}
+
+Consider a surface $S$ (see diagram), the magnetic flux passing through that surface is $\Phi=\int_S\textbf{B}.d\textbf{S}$. The change in magnetic flux through the surface can then be written as:
+
+\begin{equation}
+    \frac{d\Phi}{dt} = \int_s\frac{\partial\textbf{B}}{\partial t}.d\textbf{S} + \frac{d\Phi_C}{dt}
+\end{equation}
+
+Where $d\Phi_C/dt$ is due to the plasma motion causing a change in the surface.
+This change (red box in diagram) has area $\textbf{V}dt\times d\textbf{l}$. The flux through this area is $\Phi_C=\textbf{B}.(\textbf{V}dt\times d\textbf{l})$. Therefore:
+
+\begin{align}
+    \frac{d\Phi_C}{dt}&=\int_l\textbf{B}.(\textbf{V}\times d\textbf{l}) \nonumber\\
+    &=-\int_S\nabla\times(\textbf{V}\times\textbf{B}).s\textbf{S}
+\end{align}
+from Stokes' theorem.
+
+So the rate of change of flux through the surface is:
+\begin{align}
+    \frac{d\Phi}{dt}&=\int_S\frac{\partial\textbf{B}}{\partial t}.d\textbf{S}-\int_S\nabla\times(\textbf{V}\times\textbf{B}).d\textbf{S} \nonumber\\
+    &= \int_S\left[\frac{\partial\textbf{B}}{\partial t}-\nabla\times(\textbf{V}\times\textbf{B})\right].d\textbf{S} \nonumber\\
+    &= 0\text{ (eq \ref{eq:convLim})}
+\end{align}
+
+So, for $R_m >> 1$ the rate of change of the flux through a surface is 0. This means that the plasma must move with the field - or that the field must move with the plasma. Consider the thermal and magnetic energy densities ($W_T$ and $W_B$) to determine which dominates:
+
+\begin{equation}
+    \beta=\frac{W_T}{W_B}
+\end{equation}
+
+Where $\beta$ is the plasma beta. If $\beta>>1$ then the particle energy is dominant and it is the particle motion that carries the magnetic field. When $\beta<<1$ magnetic energy dominates and the plasma is frozen to magnetic field lines.
+
+\subsubsection{Parker spiral}
 
 Because of the rotation of the sun, solar wind (along with IMF) follows a spiral pattern similar to that produced by droplets of water as a wet tennis ball is thrown into the air with rapid spin. These field lines are `open`, i.e. they have an origin, but instead of returning to a corresponding region at the opposite pole, extend indefinitely into space \cite{imfUptoLat16}. 
 
@@ -149,7 +222,7 @@ Reconnection is a process that allows magnetic fields from separate domains to b
     \label{fig:dungey}
 \end{Figure}
 
-Aurora at very high latitudes are rare, but can occur in an event known as a transpolar arc \cite{polarAurora1, polarAurora2} (see figure \ref{fig:TPA}). There is much debate on their formation, one theory for their formation was proposed by Milan et al in \cite{TPAdebate}, where magnetic flux in the magnetotail lobes - the open field line region that maps down to the polar cap - reconnects but is trapped in the magnetotail. Transpolar arcs occur when the IMF is northward, which would explain why flux gets trapped in the magnetotail, there is a blockage created because dayside reconnection cannot occur.
+Aurora at very high latitudes are rare, but can occur in an event known as a transpolar arc \cite{polarAurora1, polarAurora2} (see figure \ref{fig:TPA}). There is much debate on their formation, one theory for their formation was proposed by Milan \textit{et al} in \cite{TPAdebate}, where magnetic flux in the magnetotail lobes - the open field line region that maps down to the polar cap - reconnects but is trapped in the magnetotail. Transpolar arcs occur when the IMF is northward, which would explain why flux gets trapped in the magnetotail, there is a blockage created because dayside reconnection cannot occur.
 
 \begin{Figure}
     \begin{minipage}[c]{0.4\textwidth}
@@ -255,7 +328,7 @@ Many short duration events are likely to be noise. Although cluster makes a full
 \subsection{Interplanetary Magnetic Field}
 The IMF data consists of three measurements from OMNI, $B_x, B_y, B_z$, all in the GSM coordinate system.
 
-$B_z$ represents the IMF polarity, positive northwards and negative southwards. For the time range that we have been considering, the average bz was:
+$B_z$ represents the IMF polarity, positive northwards and negative southwards. For the time range that we have been considering, the average $B_z$ was:
 
 \begin{equation}
     \overline{B_z} = 0.004 \pm 3.275\ nT
@@ -286,13 +359,26 @@ It is also theorised that the plasma sheet expands vertically during northward I
 \subsection{Relationship between Z and IMF direction}
 If high temperatures in the lobe are caused by times of northward IMF, then we should see that the average IMF $B_Z$ increases with $Z$. 
 
+Initially, we considered only the times between July-October 2005 because we knew for certain there was at least one event during that period, on 15/09/2005 \cite{Fear1506}.
 
+\begin{Figure}
+    \begin{minipage}[c]{0.57\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{littleDates_imf_with_z.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.4\textwidth}
+        \captionof{figure}{Histogram showing the variation of $B_Z$ with $|Z_{GSE}|$. Each bar is the mean IMF value for the $|Z_{GSM}|$ bin [z, $|Z_{GSM}|_{MAX}$]. The height of the bars at $>7R_e$ strongly indicates that high temperatures in the lobe are correlated with northward IMF. However, as shown later - this may not be the case in reality. }
+        \label{fig:littleDates_imf_with_z}
+    \end{minipage}
+\end{Figure}
+
+Figure \ref{fig:littleDates_imf_with_z} shows how the average IMF $B_z$ varies with $Z_{GSE}$. Each bin on the plot contains points from the maximum value on the horizontal axis ($12R_e$) down to the minimum $Z$ of each bin. E.g. the bin beginning at $6R_e$ contains values from $6R_e$ all the way to $12R_e$.
 
 
 \subsection{Connection to Transpolar Arcs}
 It is possible to compare temperatures in the lobe with images of the auroral oval. As shown in section \ref{ssec:DURn}, there were 732 observed events with a temperature of over $20MK$. These can be filtered further to exclude all events with a duration less than 1.5 hours. 
 
-This is to align with observations from SSUSI, an instrument carried on Defense Meteorological Satellite Program (DMSP) satellites that has been taking images of the auroral oval every 100 minutes since 2005. 
+This is to align with observations from SSUSI, an instrument carried on Defence Meteorological Satellite Program (DMSP) satellites that has been taking images of the auroral oval every 100 minutes since 2005. 
 
 Computing power and internet bandwidth were limited during this project, so a full an exhaustive search of all SSUSI instrument data was not possible. Instead, we chose to limit to the F16 dataset only.
 
