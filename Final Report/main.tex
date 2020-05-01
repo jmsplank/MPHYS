@@ -58,7 +58,7 @@
   {\par\medskip\noindent\minipage{\linewidth}}
   {\endminipage\par\medskip}
 
-\title{PHYS6006 Final Report \\
+\title{4581 PHYS6006 Final Report \\
        Magnetospheric structure associated with high-latitude auroras}
 \author[1]{J. Plank}
 \author[2]{R. C. Fear}
@@ -81,9 +81,6 @@
 
 \tableofcontents
 \addtocontents{toc}{~\hfill\textbf{Page}\par}
-\addtocontents{lof}{~\hfill\textbf{Page}\par}
-\bigskip
-\listoffigures
 
 \pagebreak
 
@@ -169,7 +166,7 @@ This change (red box in diagram) has area $\textbf{V}dt\times d\textbf{l}$. The 
 
 \begin{align}
     \frac{d\Phi_C}{dt}&=\int_l\textbf{B}.(\textbf{V}\times d\textbf{l}) \nonumber\\
-    &=-\int_S\nabla\times(\textbf{V}\times\textbf{B}).s\textbf{S}
+    &=-\int_S\nabla\times(\textbf{V}\times\textbf{B}).d\textbf{S}
 \end{align}
 from Stokes' theorem.
 
@@ -325,7 +322,7 @@ Many short duration events are likely to be noise. Although cluster makes a full
     \end{minipage}
 \end{table}
 
-\subsection{Interplanetary Magnetic Field}
+\subsection{Interplanetary Magnetic Field \label{interMF}}
 The IMF data consists of three measurements from OMNI, $B_x, B_y, B_z$, all in the GSM coordinate system.
 
 $B_z$ represents the IMF polarity, positive northwards and negative southwards. For the time range that we have been considering, the average $B_z$ was:
@@ -356,7 +353,7 @@ It is also theorised that the plasma sheet expands vertically during northward I
 
 \section{RESULTS}
 
-\subsection{Relationship between Z and IMF direction}
+\subsection{Relationship between $|Z|$ and $B_Z$ for 2005}
 If high temperatures in the lobe are caused by times of northward IMF, then we should see that the average IMF $B_Z$ increases with $Z$. 
 
 Initially, we considered only the times between July-October 2005 because we knew for certain there was at least one event during that period, on 15/09/2005 \cite{Fear1506}.
@@ -374,11 +371,63 @@ Initially, we considered only the times between July-October 2005 because we kne
 
 Figure \ref{fig:littleDates_imf_with_z} shows how the average IMF $B_z$ varies with $Z_{GSE}$. Each bin on the plot contains points from the maximum value on the horizontal axis ($12R_e$) down to the minimum $Z$ of each bin. E.g. the bin beginning at $6R_e$ contains values from $6R_e$ all the way to $12R_e$.
 
+For $|Z_{GSE}|<7R_e$ the average IMF is approximately stationary, which is as expected and aligns with the statement in section \ref{interMF} that IMF $_B_Z$ is 50\% positive and 50\% negative on longer timescales. For $|Z_{GSE}|\ge7R_e$ we see a steadily increasing positive trend for the IMF. This would be an indication that high temperatures in the lobe are correlated with northward IMF. 
+
+A correlation with northward IMF suggests that high temperatures in the lobe do not occur during the typical Dungey cycle. If tail reconnection is still happening but dayside reconnection has been halted then there could be a build up of flux in the tail that has nowhere to go apart from spreading into the lobes and becoming trapped. This mechanism was proposed by Fear \textbf{et al} \cite{Fear1506}, they provide further evidence that this is the cause by showing for the case study on 15/09/2005 that atypically hot plama occurs on closed field lines.
+
+\subsubsection{Angle of IMF in Y-Z plane}
+We further explore this relationship by considering the angle that IMF creates in the GSE Y-Z plane.
+
+Figure \ref{fig:littleDates_imf_angle_hist} shows nine polar histograms, each one containing data points greater than a minimum $|Z|$ threshold (noted above each plot). The bars are normalised so that the area is equal to 1. Each plot also contains a red line, the angle represents the directional mean angle \cite{mardia_jupp_2000} and the length represents the resultant length. 
+
+Each measurement of the IMF can be considered as a vector with an $x$, $y$ and $z$ coordinate, therefore the angle in the $yz$ plane $\theta_{yz}$ can be defined as:
+
+\begin{equation}
+    \theta_{yz}= 
+    \begin{cases}
+        \tan^{-1}\left(\frac{B_y}{B_z}\right) &\text{ if } x>0, \\
+        \tan^{-1}\left(\frac{B_y}{B_z}\right)+\pi &\text{ if } x < 0 \text{ and } y \ge 0, \\
+        \tan^{-1}\left(\frac{B_y}{B_z}\right)-\pi &\text{ if } x<= \text{ and } y < 0, \\
+        +\frac{\pi}{2} &\text{ if } x=0 \text{ and } y > 0, \\
+        -\frac{\pi}{2} &\text{ if } x=0 \text{ and } y<0, \\
+        \text{undefined} &\text{ if } x=y=0
+    \end{cases}
+\end{equation}
+
+This precise definition, provided by the \verb|arctan2()| \cite{arctan2} function in the 3rd party python package numpy \cite{numpy}, allows for an unambiguous conversion from Cartesian to polar coordinates. 
+
+The mean direction can also be considered the direction of centre of mass, which has coordinates:
+
+\begin{equation}
+    \overline{C} = \frac{1}{n}\sum_{j=1}^n \cos\theta_{yz}, \qquad \overline{S}=\frac{1}{n}\sum_{j=1}^n\sin\theta_{yz}
+\end{equation}
+
+From which the directional mean can be obtained with \verb|arctan2(|$\overline{S}/\overline{C}$\verb|)|. The resultant length is then simply $R=\sqrt{\overline{S}^2+\overline{C}^2}$.
+
+\begin{wrapfigure}{r}{0.4\textwidth}
+    \hspace{1cm}
+    \vspace{-8mm}
+    \incfig[0.3]{angleExample}
+    \vspace{5mm}
+\end{wrapfigure}
+
+Using a directional mean when working with angles is more precise as it allows accurate averaging of a set of vectors spread across the $360^\circ\rightarrow0^\circ$ boundary. For example, imagine a set of angles $[300, 345, 355, 7, 22, 40]$; the numerical mean of these values is $178^\circ$ which, as is clear in the diagram to the right, is almost $180^\circ$ from the true mean and not actually representative of the values at all. The directional mean however comes out to be $359^\circ$, this fits the data much better.
+
+Now back to figure \ref{fig:littleDates_imf_angle_hist}. The bars in each plot show how the distribution varies over the range of $|Z|$, and even without the mean line to guide you it is clear that as $|Z|$ increases the angles are trending towards the upper half, which is $+\text{ve}B_z$ i.e. northwards IMF.
+
+Because of the nature of how the directional mean was calculated, each point is treated as a unit vector. This allows a slightly different perspective on the IMF trend to figure \ref{fig:littleDates_imf_with_z}, since it removes bias introduced by the magnitude of $B$. In this case though we see the same trend, starting off negative/almost zero (small resultant length) and trending strongly positive.
+
+\begin{Figure}
+    \centering
+    \includegraphics[width=\textwidth]{littleDates_imf_angle_hist.png}
+    \captionof{figure}{Polar histograms of IMF $\theta_{yz}$ angle distribution. Bars represent number of events with a particular angle, normalised so the total area equals 1. Each plot represents a different minimum cutoff value, increasing left-right and top-bottom. The red line on each plot represents the directional mean angle and resultant length of the data in the plot. A short line represents a weak correlation with the mean and a long line represents a strong correlation, i.e. the data all points in roughly the same direction. We see that as $|Z_{GSE}|$ increases, the mean direction line begins to point more northwards and becomes longer.}
+    \label{fig:littleDates_imf_angle_hist}
+\end{Figure}
 
 \subsection{Connection to Transpolar Arcs}
 It is possible to compare temperatures in the lobe with images of the auroral oval. As shown in section \ref{ssec:DURn}, there were 732 observed events with a temperature of over $20MK$. These can be filtered further to exclude all events with a duration less than 1.5 hours. 
 
-This is to align with observations from SSUSI, an instrument carried on Defence Meteorological Satellite Program (DMSP) satellites that has been taking images of the auroral oval every 100 minutes since 2005. 
+This is to align with observations from SSUSI, an instrument carried on Defence Meteorological Satellite Program (DMSP) satellites that have been taking images of the auroral oval every 100 minutes since 2005. 
 
 Computing power and internet bandwidth were limited during this project, so a full an exhaustive search of all SSUSI instrument data was not possible. Instead, we chose to limit to the F16 dataset only.
 
