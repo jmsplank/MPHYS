@@ -86,7 +86,7 @@ with mp.Timer('Timing code'):
         ax.set_theta_zero_location('N')
         ax.set_theta_direction(-1)
         ax.hist(data3.angle, np.linspace(-np.pi, np.pi, 20),
-                edgecolor='k', fill=False, linewidth=1, density=True)
+                edgecolor='k', fill=False, linewidth=1, density=True, align='left')
 
         ax.set_title(rf'$|Z_{{GSE}}| > {r:.1f}\ R_e$')
         ax.plot([T]*2, [0, R], color='r')

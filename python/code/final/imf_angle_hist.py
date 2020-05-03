@@ -25,15 +25,15 @@ with mp.Timer('Timing code'):
     moments = pd.read_csv('moments.csv',
                           index_col=0, parse_dates=True)
 
-    omni = mp.omni(dateRange)
+    # omni = mp.omni(dateRange)
     # omni.to_csv('omni.csv')
-    # omni = pd.read_csv('omniGSE.csv',
-    #    index_col=0, parse_dates=True)
+    omni = pd.read_csv('omniGSE.csv',
+                       index_col=0, parse_dates=True)
 
-    pgp = mp.pgp(dateRange)  # Get predicted geometric position
+    # pgp = mp.pgp(dateRange)  # Get predicted geometric position
     # pgp.to_csv('pgp.csv')
-    # pgp = pd.read_csv('pgpGSE.csv',
-    #   index_col=0, parse_dates=True)
+    pgp = pd.read_csv('pgpGSE.csv',
+                      index_col=0, parse_dates=True)
 
     # data = pd.merge_asof(moments, omni, left_index=True, right_index=True)
     data = pd.merge_asof(moments, pgp, left_index=True, right_index=True)
@@ -86,7 +86,7 @@ with mp.Timer('Timing code'):
         ax.set_theta_zero_location('N')
         ax.set_theta_direction(-1)
         ax.hist(data3.angle, np.linspace(-np.pi, np.pi, 20),
-                edgecolor='k', fill=False, linewidth=1, density=True)
+                edgecolor='k', fill=False, linewidth=1, density=True, align='left')
 
         ax.set_title(f'|Z| > {r:.1f}')
         ax.plot([T]*2, [0, R], color='r')
