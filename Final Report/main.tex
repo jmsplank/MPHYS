@@ -58,7 +58,7 @@
   {\par\medskip\noindent\minipage{\linewidth}}
   {\endminipage\par\medskip}
 
-\title{4581 PHYS6006 Final Report \\
+\title{PHYS6006 Final Report \\
        Magnetospheric structure associated with high-latitude auroras}
 \author[1]{J. Plank}
 \author[2]{R. C. Fear}
@@ -91,6 +91,10 @@
 Earth and the Sun are connected by more than just gravity, magnetic interactions between the two bodies are the cause of some of the most dramatic and complex phenomena on Earth. The most well known of these is the aurora (Borealis in the northern hemisphere and Australis in the southern). More commonly known as the northern and southern lights, these light shows come as a result of charged particles flowing along the Sun's magnetic field lines (known as solar wind) and making their way down to Earth in a zone known as the auroral oval \cite{AAAspaceweather}. The Sun's violent nature is also transmitted to Earth along its magnetic field, known as the `Interplanetary magnetic field` (IMF). This can result in satellite damage, radiation hazards to astronauts and airline passengers, telecommunications problems, and outages of power and electronics systems \cite{AAAspaceweather}.
 
 The modern theory of the formation of the aurora was first proposed by Kristian Birkeland in 1903 \cite{birkeland2018norwegian}. He said that auroras are produced when solar wind encounters the geomagnetic field. The result of this is the formation of the plasmasphere in the equatorial plane of Earth's magnetic field \cite{cosmicelectrodyn}.
+
+\section{THEORETICAL BACKGROUND}
+\hfill \\
+\hfill
 
 \subsection{Structure of Earth's magnetic field}
 Figure \ref{fig:plasmasphere} is a representation of the solar-terrestrial environment. The solar wind, travelling with the interplanetary magnetic field from the sun \cite{Svalgaard_2010}, is coming from the left. It collides with the terrestrial magnetic field at supersonic speeds, creating a bow shock wave in front of the magnetosphere - the region where magnetic field lines connect to Earth at both ends - the boundary of the magnetosphere is the magnetopause. Supersonic solar winds compress at this boundary creating a magnetosheath between the magnetopause and the bow shock \cite{BSPP}.
@@ -131,7 +135,7 @@ Magnetohydrodynamic induction equation:
     \frac{\partial \textbf{B}}{\partial t} &= \nabla \times (\textbf{V}\times\textbf{B})+\frac{1}{\mu_0\sigma}\nabla^2\textbf{B}
 \end{align}
 
-Where the first term is the convective term and the second is diffusive. The magnetic Reynolds number $R_m$:
+Where the first term is the convective term and the second is diffusive. $\textbf{B}$ is the magnetic field, \textbf{V} is the velocity vector, $\mu_0$ is the permeability of free space and $\sigma$ is conductivity. The magnetic Reynolds number $R_m$:
 \begin{align}
     R_m&=\frac{\text{Convective term}}{\text{Diffusive term}} \nonumber\\
     &=\frac{|\nabla\times(\textbf{V}\times\textbf{B})|}{|\nabla^2\textbf{B}/\mu_0\sigma|}
@@ -162,7 +166,7 @@ Consider a surface $S$ (see diagram), the magnetic flux passing through that sur
 \end{equation}
 
 Where $d\Phi_C/dt$ is due to the plasma motion causing a change in the surface.
-This change (red box in diagram) has area $\textbf{V}dt\times d\textbf{l}$. The flux through this area is $\Phi_C=\textbf{B}.(\textbf{V}dt\times d\textbf{l})$. Therefore:
+This change (red box in diagram) has area $\textbf{V}dt\times d\textbf{l}$. The flux through this area is $\textbf{B}.(\textbf{V}dt\times d\textbf{l})$. Therefore:
 
 \begin{align}
     \frac{d\Phi_C}{dt}&=\int_l\textbf{B}.(\textbf{V}\times d\textbf{l}) \nonumber\\
@@ -351,7 +355,7 @@ It is also theorised that the plasma sheet expands vertically during northward I
     \end{minipage}
 \end{Figure}
 
-\section{RESULTS}
+\section{RESULTS \label{sec:results}}
 
 \subsection{Relationship between $|Z|$ and $B_Z$ for 2005}
 If high temperatures in the lobe are caused by times of northward IMF, then we should see that the average IMF $B_Z$ increases with $Z$. 
@@ -371,12 +375,12 @@ Initially, we considered only the times between July-October 2005 because we kne
 
 Figure \ref{fig:littleDates_imf_with_z} shows how the average IMF $B_z$ varies with $Z_{GSE}$. Each bin on the plot contains points from the maximum value on the horizontal axis ($12R_e$) down to the minimum $Z$ of each bin. E.g. the bin beginning at $6R_e$ contains values from $6R_e$ all the way to $12R_e$.
 
-For $|Z_{GSE}|<7R_e$ the average IMF is approximately stationary, which is as expected and aligns with the statement in section \ref{interMF} that IMF $_B_Z$ is 50\% positive and 50\% negative on longer timescales. For $|Z_{GSE}|\ge7R_e$ we see a steadily increasing positive trend for the IMF. This would be an indication that high temperatures in the lobe are correlated with northward IMF. 
+For $|Z_{GSE}|<7R_e$ the average IMF is approximately stationary, which is as expected and aligns with the statement in section \ref{interMF} that IMF $B_Z$ is 50\% positive and 50\% negative on longer timescales. For $|Z_{GSE}|\ge7R_e$ we see a steadily increasing positive trend for the IMF. This would be an indication that high temperatures in the lobe are correlated with northward IMF. 
 
-A correlation with northward IMF suggests that high temperatures in the lobe do not occur during the typical Dungey cycle. If tail reconnection is still happening but dayside reconnection has been halted then there could be a build up of flux in the tail that has nowhere to go apart from spreading into the lobes and becoming trapped. This mechanism was proposed by Fear \textbf{et al} \cite{Fear1506}, they provide further evidence that this is the cause by showing for the case study on 15/09/2005 that atypically hot plama occurs on closed field lines.
+A correlation with northward IMF suggests that high temperatures in the lobe do not occur during the typical Dungey cycle. If tail reconnection is still happening but dayside reconnection has been halted then there could be a build up of flux in the tail that has nowhere to go apart from spreading into the lobes and becoming trapped. This mechanism was proposed by Fear \textbf{et al} \cite{Fear1506}, they provide further evidence that this is the cause by showing for the case study on 15/09/2005 that atypically hot plasma occurs on closed field lines.
 
 \subsubsection{Angle of IMF in Y-Z plane}
-We further explore this relationship by considering the angle that IMF creates in the GSE Y-Z plane.
+We further explore this relationship by considering the angle that IMF creates in the GSE Y-Z plane (see diagram on the right below).
 
 Figure \ref{fig:littleDates_imf_angle_hist} shows nine polar histograms, each one containing data points greater than a minimum $|Z|$ threshold (noted above each plot). The bars are normalised so that the area is equal to 1. Each plot also contains a red line, the angle represents the directional mean angle \cite{mardia_jupp_2000} and the length represents the resultant length. 
 
@@ -387,7 +391,7 @@ Each measurement of the IMF can be considered as a vector with an $x$, $y$ and $
     \begin{cases}
         \tan^{-1}\left(\frac{B_y}{B_z}\right) &\text{ if } x>0, \\
         \tan^{-1}\left(\frac{B_y}{B_z}\right)+\pi &\text{ if } x < 0 \text{ and } y \ge 0, \\
-        \tan^{-1}\left(\frac{B_y}{B_z}\right)-\pi &\text{ if } x<= \text{ and } y < 0, \\
+        \tan^{-1}\left(\frac{B_y}{B_z}\right)-\pi &\text{ if } x < \text{ and } y < 0, \\
         +\frac{\pi}{2} &\text{ if } x=0 \text{ and } y > 0, \\
         -\frac{\pi}{2} &\text{ if } x=0 \text{ and } y<0, \\
         \text{undefined} &\text{ if } x=y=0
@@ -404,24 +408,60 @@ The mean direction can also be considered the direction of centre of mass, which
 
 From which the directional mean can be obtained with \verb|arctan2(|$\overline{S}/\overline{C}$\verb|)|. The resultant length is then simply $R=\sqrt{\overline{S}^2+\overline{C}^2}$.
 
-\begin{wrapfigure}{r}{0.4\textwidth}
-    \hspace{1cm}
-    \vspace{-8mm}
+\begin{Figure}
+    \centering
     \incfig[0.3]{angleExample}
-    \vspace{5mm}
-\end{wrapfigure}
+    \hspace{2cm}
+    \incfig[0.3]{angleReference}
+\end{Figure}
 
 Using a directional mean when working with angles is more precise as it allows accurate averaging of a set of vectors spread across the $360^\circ\rightarrow0^\circ$ boundary. For example, imagine a set of angles $[300, 345, 355, 7, 22, 40]$; the numerical mean of these values is $178^\circ$ which, as is clear in the diagram to the right, is almost $180^\circ$ from the true mean and not actually representative of the values at all. The directional mean however comes out to be $359^\circ$, this fits the data much better.
 
-Now back to figure \ref{fig:littleDates_imf_angle_hist}. The bars in each plot show how the distribution varies over the range of $|Z|$, and even without the mean line to guide you it is clear that as $|Z|$ increases the angles are trending towards the upper half, which is $+\text{ve}B_z$ i.e. northwards IMF.
+Now back to figure \ref{fig:littleDates_imf_angle_hist}. The bars in each plot show how the distribution varies over the range of $|Z|$, and even without the mean line to guide you it is clear that as $|Z|$ increases the angles are trending towards the upper half, which is $+\text{ve}\ B_z$ i.e. northwards IMF.
 
 Because of the nature of how the directional mean was calculated, each point is treated as a unit vector. This allows a slightly different perspective on the IMF trend to figure \ref{fig:littleDates_imf_with_z}, since it removes bias introduced by the magnitude of $B$. In this case though we see the same trend, starting off negative/almost zero (small resultant length) and trending strongly positive.
 
 \begin{Figure}
     \centering
     \includegraphics[width=\textwidth]{littleDates_imf_angle_hist.png}
-    \captionof{figure}{Polar histograms of IMF $\theta_{yz}$ angle distribution. Bars represent number of events with a particular angle, normalised so the total area equals 1. Each plot represents a different minimum cutoff value, increasing left-right and top-bottom. The red line on each plot represents the directional mean angle and resultant length of the data in the plot. A short line represents a weak correlation with the mean and a long line represents a strong correlation, i.e. the data all points in roughly the same direction. We see that as $|Z_{GSE}|$ increases, the mean direction line begins to point more northwards and becomes longer.}
+    \captionof{figure}{Polar histograms of IMF $\theta_{yz}$ angle distribution. Bars represent number of events with a particular angle, normalised so the total area equals 1. There are 20 bars per plot each covering an angle of $2\pi/20=0.31$ radians or $17.7$ degrees. Each plot represents a different minimum cutoff value, increasing left-right and top-bottom. The red line on each plot represents the directional mean angle and resultant length of the data in the plot. A short line represents a weak correlation with the mean and a long line represents a strong correlation, i.e. the data all points in roughly the same direction. We see that as $|Z_{GSE}|$ increases, the mean direction line begins to point more northwards and becomes longer.}
     \label{fig:littleDates_imf_angle_hist}
+\end{Figure}
+
+\subsection{Expanding to include years 2002-2010}
+With the results from July-October 2005 looking so promising, expanding the results to include the full range (2002-2010) was a natural next step. Figure \ref{fig:imf_with_z} shows how this has affected the results. The shape is very similar however the effect is much less pronounced. Figure \ref{fig:littleDates_imf_with_z} shows an increase from $0\ nT$ all the way to a maximum average of $8\ nT$. Here, the increase is less than $1nT$. It appears as though there is still a connection between northward IMF and Z, however the fact that adding more data has caused the mean values to suddenly jump much closer to 0, well below the standard error bars of fig.\ref{fig:littleDates_imf_with_z} at high Z does make the result suspect.
+
+\begin{Figure}
+    \begin{minipage}[c]{0.57\textwidth}
+        \centering
+        \includegraphics[width=0.9\textwidth]{imf_with_z.png}
+    \end{minipage}
+    \begin{minipage}[c]{0.4\textwidth}
+        \captionof{figure}{Similarly to fig \ref{fig:littleDates_imf_with_z}, plot shows average $B_z$ as a function of $Z$. In this figure, measurements from the whole available range have been considered, that's the months July to October of the years 2002 to 2010. In this plot we see a much more compressed version of the previous, calling into question the results from July-October 2005.} 
+        \label{fig:imf_with_z}
+    \end{minipage}
+\end{Figure}
+
+Since the result from using all months is so different to when 2005 was isolated, it is interesting to compare all the months 2002-2010 side-by-side to see what each year's data looks like. If there were a definite connection between we would expect all years to exhibit the same trend.
+
+Figure \ref{fig:indiv_months_imf_with_z} shows that this is not the case. Only the years 2002 and 2005 show this strong upwards trend. 2003 does also but to a lesser extent. The years 2006 to 2010 show almost no deviation from zero at all.
+
+An investigation into what makes the years 2002 and 2005 so different would make a very interesting extension to this project. the best place to start would be looking into exactly when the periods of highest $B_Z$ occurred during those months.
+
+\begin{Figure}
+    \centering
+    \includegraphics[width=\textwidth]{indiv_months_imf_with_z.png}
+    \captionof{figure}{Comparison of years 2002-2010, showing the amount of variability. Only the years 2002 and 2005 show the predicted trend.}
+    \label{fig:indiv_months_imf_with_z}
+\end{Figure}
+
+Taking a look at figure \ref{fig:imf_angle_hist} where the magnitude of $B$ does not affect the result, we see that the mean angle stays southward for all ranges of $Z$, with the exception of $|Z|>10.8$ where the angle is $53^\circ$, but the resultant length is so short that it's essentially zero. This is further evidence that the relationship is more complex than previously thought.
+
+\begin{Figure}
+    \centering
+    \includegraphics[width=\textwidth]{imf_angle_hist.png}
+    \captionof{figure}{Similar to \ref{fig:littleDates_imf_angle_hist}, but including the entire range of years 2002-2010. We see that in this case the average IMF is always negative, except for the last case at $>10.8\ R_e$ where it is zero. This shows that it is certainly not valid to conclude that high temperatures in the lobe are directly correlated with northward IMF.}
+    \label{fig:imf_angle_hist}
 \end{Figure}
 
 \subsection{Connection to Transpolar Arcs}
@@ -455,11 +495,13 @@ This sample size is relatively small and could be expanded upon easily by loweri
 However, an arc being visible in 50\% of cases does suggest a link between high-temperatures in the lobe and the formation of transpolar arcs, as it is well above the estimate quoted above of 12\%. 
 
 There were also a large number of transpolar arcs spotted by SSUSI that were not detected by Cluster. This is easily explained by the fact that Cluster is very small and the lobe is very big, it is very likely that Cluster was just in the wrong place to be able to see it.
-\section{DISCUSSION}
-HI
 
-\section{CONCLUSION: FUTURE WORK}
-HI \\
+\section{CONCLUSION}
+We looked at data from ESA's Cluster spacecraft mission during the years 2002-2010 to try and determine if there was a link between the polarity of the interplanetary magnetic field and the presence of high temperatures at a distance, $Z$, above or below the Earth.
+
+First, we determined the nominal temperature of the magnetosphere and how it varies with $Z$. As expected, low $Z$ resulted in high temperatures, as the spacecraft would have been in the plasma sheet which is known to be hot. Increasing $Z$ resulted in a decrease in temperature, as the spacecraft moves out of the plasma sheet and into the lobe, a much less active region. The boundary between plasma sheet and lobe changed over time, for the time periods we worked with (July-October 2002-2010) we determined the inner edge of the lobe to be at approximately $\pm6$ Earth radii. Figure \ref{fig:avg_temp_z} showed us that a temperature threshold of above $20MK$ was a good indicator for when the temperature in the lobe was uncharacteristically high.
+
+From here, we expanded to include data from NASA's OMNI spacecraft, which is situated at L1 and provides measurements of many things, including the time-lagged IMF components $B_x$, $B_y$ and $B_z$. Using these, we were able to determine whether the IMF was pointing northward or southward at the time Cluster was taking measurements of the temperature in the lobe. 
 
 \printbibliography
 % \end{multicols}
