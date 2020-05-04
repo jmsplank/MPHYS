@@ -53,6 +53,8 @@
     \input{#2.pdf_tex}
 }
 
+%CUSTOM APPENDIX
+\usepackage[toc, page]{appendix}
 
 \newenvironment{Figure}
   {\par\medskip\noindent\minipage{\linewidth}}
@@ -71,10 +73,10 @@
 
 % ABSTRACT
 \begin{abstract}
-    \noindent\textit{Context:} Only case studies have been done on the magnetospheric structure associated with the formation of high latitude aurora, and the connection of interplanetary magnetic field direction is suspected but has never been quantified.\\
+    \noindent\textit{Context:} Only case studies have been done on the magnetospheric structure associated with the formation of high latitude aurora, and the connection to interplanetary magnetic field direction is suspected but has never been quantified.\\
     \textit{Aims:} To produce a statistical survey on the relationship between a northward pointing interplanetary magnetic field and a phenomenon known as transpolar arcs.\\
-    \textit{Methods:} Using data from the ESA satellite Cluster, we analysed the ion temperature for many different values of $Z_{GSM}$, covering the plasma sheet as well as the magnetotail lobes.\\
-    \textit{Results:} We found a direct link to IMF direction based on high temperature events observed in the lobe, suggesting high-latitude aurora form during periods of northward pointing IMF.
+    \textit{Methods:} Using data from the ESA satellite Cluster, and NASA's OMNI dataset, we analysed the average IMF $B_Z$ at high temperatures $T>20\ MK$ at increasing $Z$, covering the plasma sheet and the lobe. \\
+    \textit{Results:} We found that there is no general correlation between high temperatures in the lobe and the presence of northward IMF, however there were several occasions when a connection was present (2002 and 2005), which could be explored further in a future report.
 \end{abstract}
 
 \pagebreak
@@ -88,16 +90,19 @@
 % \begin{multicols}{2}
 
 \section{INTRODUCTION}
-Earth and the Sun are connected by more than just gravity, magnetic interactions between the two bodies are the cause of some of the most dramatic and complex phenomena on Earth. The most well known of these is the aurora (Borealis in the northern hemisphere and Australis in the southern). More commonly known as the northern and southern lights, these light shows come as a result of charged particles flowing along the Sun's magnetic field lines (known as solar wind) and making their way down to Earth in a zone known as the auroral oval \cite{AAAspaceweather}. The Sun's violent nature is also transmitted to Earth along its magnetic field, known as the `Interplanetary magnetic field` (IMF). This can result in satellite damage, radiation hazards to astronauts and airline passengers, telecommunications problems, and outages of power and electronics systems \cite{AAAspaceweather}.
+Earth and the Sun are connected by more than just gravity, magnetic interactions between the two bodies are the cause of some of the most dramatic and complex phenomena on Earth. The most well known of these is the aurora (Borealis in the northern hemisphere and Australis in the southern). More commonly known as the northern and southern lights, these light shows come as a result of charged particles flowing along the Sun's magnetic field lines (known as solar wind) and making their way down to Earth to form the auroral oval \cite{AAAspaceweather}. The Sun's violent nature is also transmitted to Earth via its magnetic field, known as the `Interplanetary magnetic field` (IMF). This can result in satellite damage, radiation hazards to astronauts and airline passengers, telecommunications problems, and outages of power and electronics systems \cite{AAAspaceweather}.
 
-The modern theory of the formation of the aurora was first proposed by Kristian Birkeland in 1903 \cite{birkeland2018norwegian}. He said that auroras are produced when solar wind encounters the geomagnetic field. The result of this is the formation of the plasmasphere in the equatorial plane of Earth's magnetic field \cite{cosmicelectrodyn}.
+The modern theory for the formation of aurora was first proposed by Kristian Birkeland in 1903 \cite{birkeland2018norwegian}. He said that auroras are produced when solar wind encounters the geomagnetic field. The result of this is the formation of the plasmasphere in the equatorial plane of Earth's magnetic field \cite{cosmicelectrodyn}.
+
+%ADD MORE ABOUT BACKGROUND TO THIS PROJECT AND AIMS
+One type of aurora that occurs at high latitudes on Earth is the transpolar arc. So far, only case studies have been done on how changes in the magnetic field far from Earth are associated with these auroras. In this project, we aim to complete a broader statistical survey that will help to determine how high-temperatures in the magnetosphere lobes are related to times when the magnetic field from the Sun points northward once it has travelled to Earth. This could lead to a better understanding of why these changes in Earth's magnetic field have taken place. We will also begin a comparison of the times that high temperatures are spotted by ESA's Cluster satellites and the times when transpolar arcs are spotted.
 
 \section{THEORETICAL BACKGROUND}
 \hfill \\
 \hfill
 
 \subsection{Structure of Earth's magnetic field}
-Figure \ref{fig:plasmasphere} is a representation of the solar-terrestrial environment. The solar wind, travelling with the interplanetary magnetic field from the sun \cite{Svalgaard_2010}, is coming from the left. It collides with the terrestrial magnetic field at supersonic speeds, creating a bow shock wave in front of the magnetosphere - the region where magnetic field lines connect to Earth at both ends - the boundary of the magnetosphere is the magnetopause. Supersonic solar winds compress at this boundary creating a magnetosheath between the magnetopause and the bow shock \cite{BSPP}.
+Figure \ref{fig:plasmasphere} is a representation of the solar-terrestrial environment. Solar wind, travelling with the interplanetary magnetic field from the sun \cite{Svalgaard_2010}, is coming from the left. It collides with the terrestrial magnetic field at supersonic speeds, creating a bow shock wave in front of the magnetosphere - the region where magnetic field lines connect to Earth at both ends - the boundary of the magnetosphere is the magnetopause. Supersonic solar winds compress at this boundary creating a magnetosheath between the magnetopause and the bow shock \cite{BSPP}.
 
 \begin{Figure}
     \begin{minipage}[c]{0.57\textwidth}
@@ -130,12 +135,14 @@ Magnetic field lines are said to be ``frozen in`` to the solar wind plasma, the 
 
 Frozen-in flux/flow occurs when the magnetic Reynolds number is much greater than 1.
 
-Magnetohydrodynamic induction equation:
+%Maybe put in an appendix?
+
+Magnetohydrodynamic induction equation (Appendix \ref{app:mhd}):
 \begin{align}
     \frac{\partial \textbf{B}}{\partial t} &= \nabla \times (\textbf{V}\times\textbf{B})+\frac{1}{\mu_0\sigma}\nabla^2\textbf{B}
 \end{align}
 
-Where the first term is the convective term and the second is diffusive. $\textbf{B}$ is the magnetic field, \textbf{V} is the velocity vector, $\mu_0$ is the permeability of free space and $\sigma$ is conductivity. The magnetic Reynolds number $R_m$:
+Where the first term is the convective term and the second is diffusive. $\textbf{B}$ is the magnetic field, \textbf{V} is the velocity vector, $\mu_0$ is the permeability of free space and $\sigma$ is conductivity. The magnetic Reynolds number $R_m$ is defined as:
 \begin{align}
     R_m&=\frac{\text{Convective term}}{\text{Diffusive term}} \nonumber\\
     &=\frac{|\nabla\times(\textbf{V}\times\textbf{B})|}{|\nabla^2\textbf{B}/\mu_0\sigma|}
@@ -193,9 +200,9 @@ Where $\beta$ is the plasma beta. If $\beta>>1$ then the particle energy is domi
 
 Because of the rotation of the sun, solar wind (along with IMF) follows a spiral pattern similar to that produced by droplets of water as a wet tennis ball is thrown into the air with rapid spin. These field lines are `open`, i.e. they have an origin, but instead of returning to a corresponding region at the opposite pole, extend indefinitely into space \cite{imfUptoLat16}. 
 
-At the Sun's magnetic equator, field lines originating from the north and south hemispheres run parallel to each other but are oppositely directed - creating a thin current sheet known as the ``Heliospheric current sheet``. This sheet is twisted and warped due to the difference in rotational and magnetic axes and a quadrupole moment in the sun's magnetic field - it also has a spiral shape of the same form as described above \cite{alfven_1942, ParkerSpiral}.
+At the Sun's magnetic equator, field lines originating from the northern and southern hemispheres run parallel to each other but are oppositely directed - creating a thin current sheet known as the ``Heliospheric current sheet``. This sheet is twisted and warped due to the difference in rotational and magnetic axes and a quadrupole moment in the sun's magnetic field - it also has a spiral shape of the same form as described above \cite{alfven_1942, ParkerSpiral}.
 
-Since the orbital plane of the Earth is located almost along the rotation axis of the sun, we experience regular shifts in the direction of flow of the IMF because the heliospheric current sheet is sometimes above and sometimes below the planet. 
+Since the orbital plane of the Earth is located almost along the rotation axis of the sun, we experience regular shifts in direction of flow of the IMF because the heliospheric current sheet is sometimes above and sometimes below the planet. 
 
 When the IMF has a southward component, the northward pointing terrestrial field lines are allowed to merge in a process known as reconnection. However, when the IMF is northward, the structure of the magnetosphere is not well understood \cite{Fear1506}.
 
@@ -216,14 +223,16 @@ E.g. Green (the most common colour) is caused by collisions with atomic oxygen (
 
 Reconnection is a process that allows magnetic fields from separate domains to become joined to one another. When IMF is southward, reconnection occurs in a smooth cycle known as the Dungey cycle \cite{dungeyCycle} which is explained in Fig.\ref{fig:dungey}. Aurora is observed at latitudes of approximately $70^{\circ}$ because that is the boundary between the closed lines and the open ones at the polar cap (lobe).
 
+%EXPLANATION OF RECONNECTION HERE
+
 \begin{Figure}
     \centering
     \includegraphics[width=0.6\linewidth]{dungeyCycle.png}
-    \captionof{figure}{Sketch of the Dungey cycle. The IMF is assumed to be coming from the left. On the right hand side of the diagram, magnetotail reconnection is happening. Open field lines are being compressed together, eventually joining to form a closed field line that `snaps back` towards Earth, the reconnection happens typically at a radius of $\approx100R_e$. Heating and acceleration of the plasma occurs as the newly created closed field line rapidly shortens in length. The magnetic flux will then flow around to the dayside of the planet (LHS of the sketch) where it gets pushed up against the solar wind. Once again, this pressure eventually reaches a point where the field lines of the IMF and the terrestrial field merge, creating an open line with its foot on the polar cap. This line gets pushed back over to the night-side of the planet where magnetotail reconnection can happen once again (Sketch from \cite{dungeyCycle}).}
+    \captionof{figure}{Sketch of the Dungey cycle. IMF is assumed to be coming from the left. On the right hand side of the diagram, magnetotail reconnection is happening. Open field lines are being compressed together, eventually joining to form a closed field line that `snaps back` towards Earth, the reconnection happens typically at a radius of $\approx100R_e$. Heating and acceleration of the plasma occurs as the newly created closed field line rapidly shortens in length. The magnetic flux will then flow around to the dayside of the planet (LHS of the sketch) where it gets pushed up against the solar wind. Once again, this pressure eventually reaches a point where the field lines of the IMF and the terrestrial field merge, creating an open line with its foot on the polar cap. This line gets pushed back over to the night-side of the planet where magnetotail reconnection can happen once again (Sketch from \cite{dungeyCycle}).}
     \label{fig:dungey}
 \end{Figure}
 
-Aurora at very high latitudes are rare, but can occur in an event known as a transpolar arc \cite{polarAurora1, polarAurora2} (see figure \ref{fig:TPA}). There is much debate on their formation, one theory for their formation was proposed by Milan \textit{et al} in \cite{TPAdebate}, where magnetic flux in the magnetotail lobes - the open field line region that maps down to the polar cap - reconnects but is trapped in the magnetotail. Transpolar arcs occur when the IMF is northward, which would explain why flux gets trapped in the magnetotail, there is a blockage created because dayside reconnection cannot occur.
+Aurora at very high latitudes are rare, but can occur in an event known as a transpolar arc \cite{polarAurora1, polarAurora2} (see figure \ref{fig:TPA}). There is much debate on their formation, one theory was proposed by Milan \textit{et al} in \cite{TPAdebate}, where flux in the magnetotail lobes - the open field line region that maps down to the polar cap - reconnects but is trapped in the magnetotail. Transpolar arcs occur when the IMF is northward, which would explain why flux gets trapped in the magnetotail, there is a blockage created because dayside reconnection cannot occur.
 
 \begin{Figure}
     \begin{minipage}[c]{0.4\textwidth}
@@ -237,7 +246,7 @@ Aurora at very high latitudes are rare, but can occur in an event known as a tra
 \end{Figure}
 
 \section{OBSERVATIONS}
-The majority of observations in this report come from Cluster, a group of four satellites built by ESA and launched in pairs on Soyuz rockets from Baikonur on the 16th July and 9th August 2000. They fly in a 57hr elliptical polar orbit and are arranged in a tetrahedron formation with a separation of between a few hundred and a few thousand km.
+The majority of observations in this report come from Cluster, a group of four satellites built by ESA and launched in pairs on Soyuz rockets from Baikonur on the 16th July and 9th August 2000. They fly in a 57hr elliptical polar orbit and are arranged in a tetrahedral formation with a separation of between a few hundred and a few thousand km.
 
 \subsection{Limitations of Cluster's orbit}
 The orbit of cluster varies throughout the year. For significant portions of the year the satellite is well outside of the lobes, therefore the best months to extract data are July-October every year, where the spacecraft spends the majority of its time in the tail, and does not enter the magnetosheath. 
@@ -271,7 +280,7 @@ Figure \ref{fig:tempLocations} shows the mean distribution of temperatures in th
         \includegraphics[width=0.9\textwidth]{tempLocations.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.4\textwidth}
-        \captionof{figure}{The temperature distribution in the magnetosphere. Measurements from Cluster orbits in the months May-December during the years 2002-2010. Each pixel is $1{R_e}^2$ in area, and represents the mean ion temperature when cluster was in that position, blue for lower temperatures and red for hotter. The plasma sheet is visible as a high temperature region to the right of Earth.}
+        \captionof{figure}{Temperature distribution in the magnetosphere. Measurements from Cluster orbits in the months May-December during the years 2002-2010. Each pixel is $1{R_e}^2$ in area, and represents the mean ion temperature when cluster was in that position, blue for lower temperatures and red for hotter. The plasma sheet is visible as a high temperature region to the right of Earth.}
         \label{fig:tempLocations}
     \end{minipage}
 \end{Figure}
@@ -285,12 +294,12 @@ What constitutes a high temperature? That depends on where in the magnetosphere 
         \includegraphics[width=\textwidth]{avg_temp_z.png}
     \end{minipage}\hfill
     \begin{minipage}[c]{0.4\textwidth}
-        \captionof{figure}{Box plot of the temperature distribution as a function of $Z_{GSM}$. Each box covers a width of $1R_e$, starting at $[0,1)$ $R_e$ then $[1,2)$ $R_e$ etc until $[11,12]$ $R_e$. Yellow lines represent the median, each box is the interquartile range of each bin, and the ``whiskers'' are maximum and minimum values, up to $3\times IQR$. Outliers plotted as black `$\times$'. The box centred at $5.5R_e$ (for the interval $[5,6)$ $R_e$) suggests that temperatures above $\approx20MK$ are good candidates for high temperature events. Data is from Jul-Oct 2002-2010 for $X_{GSM}<0$ $R_e$.}
+        \captionof{figure}{Box plot of the temperature distribution as a function of $Z_{GSM}$. Each box covers a width of $1R_e$, starting at $[0,1)$ $R_e$ then $[1,2)$ $R_e$ etc until $[11,12]$ $R_e$. Yellow lines represent the median, each box is the interquartile range of each bin, and the ``whiskers'' are maximum and minimum values, up to $3\times IQR$. Outliers are plotted as black `$\times$'. The box centred at $5.5R_e$ (for the interval $[5,6)$ $R_e$) suggests that temperatures above $\approx20MK$ are good candidates for high temperature events. Data is from Jul-Oct 2002-2010 for $X_{GSM}<0$ $R_e$.}
         \label{fig:avg_temp_z}
     \end{minipage}
 \end{Figure}
 
-We can see from Figure \ref{fig:tempLocations} that the plasma sheet ends at approximately $Z_{GSM}=\pm6R_e$. Giving an exact position for the edge of the plasma sheet is difficult as it is dynamic and in this project we were using measurements from many months and years.
+We can see from Figure \ref{fig:tempLocations} that the plasma sheet ends at approximately $Z_{GSM}=\pm6R_e$. Giving an exact position for the edge of the plasma sheet is difficult as it is dynamic and in this project we use measurements from many months and years.
 
 In figure \ref{fig:avg_temp_z} we created a box plot of measurements from July-October 2002-2010 (for $X_{GSM} < 0$, i.e. excluding points sunwards of Earth). Taking the estimation from above that the plasma sheet ends at $\approx6R_e$, we can see from the box centred on $5.5R_e$ that temperatures exceeding $\approx 20MK$ can reasonably be considered uncharacteristically high.
 
@@ -300,13 +309,13 @@ The event analysed by Fear \textit{et al} \cite{Fear1506} on 15-09-2005 lasted f
 \begin{Figure}
     \centering
     \includegraphics[width=\textwidth]{aur_comp.png}
-    \captionof{figure}{Histograms showing the number of events with a certain duration (in minutes). Each panel shows a different cutoff point for $|Z_{GSM}|$. Very long duration events are consistent with passing through the plasma sheet where having a temperature above $20MK$ for over 10 hours is possible. Therefore as the $Z$ cutoff is increased we would expect those long duration events to become less common as measurements outside of the plasma sheet are excluded. What is left is $732$ (see $>6 R_e$ panel) high temperature events occurring outside the region where they are expected.}
+    \captionof{figure}{Histograms showing the number of events with a certain duration (in minutes). Each panel shows a different cutoff point for $|Z_{GSM}|$. Very long duration events are consistent with passing through the plasma sheet where having a temperature above $20MK$ for over 10 hours is possible. Therefore as the $Z$ cutoff is increased we would expect those long duration events to become less common as measurements outside of the plasma sheet are excluded.}
     \label{fig:aur_comp}
 \end{Figure}
 
-We see that when the plasma sheet is excluded by excluding results where $|Z_{GSM}|<6R_e$, there are $732$ events left. This works out to be just under one per day ($732/984\approx0.75\ events/day$). The properties of this distribution are shown in table \ref{tab:event_durn}. This shows that these events are comparable in length to the 15-09-2005 event.
+We see that when the plasma sheet is excluded by only taking the measurements where $|Z_{GSM}|<6R_e$, there are $732$ events left. This works out to be just under one per day ($732/984\approx0.75\ events/day$). The properties of this distribution are shown in table \ref{tab:event_durn}. This shows that these events are comparable in length to the 15-09-2005 event.
 
-Many short duration events are likely to be noise. Although cluster makes a full rotation approximately every three seconds and can therefore provide measurements with similar resolution, the choice was made to average the data into five minute bins, which would match with the predicted geometric position data from \cite{cdms}, and the IMF components parameters obtained from NASA/GSFC's OMNI data set through OMNIWeb \cite{omniData}.
+Many short duration events are likely to be noise. Although cluster makes a full rotation approximately every three seconds and can therefore provide measurements with similar resolution, the choice was made to average the data into five minute bins, which would match with the predicted geometric position data from \cite{cdms}, and the IMF components parameters obtained from NASA/GSFC's OMNI data set through OMNIWeb \cite{omniData}. Downsampling the data was chosen over upsampling because using the mean of many measurements is preferable to interpolating missing data. Doing this allows every point to have an associated $x,\ y,\ z,\ B_x,\ B_y,\ B_z\ \& T$
 
 \begin{table}[]
     \begin{minipage}[c]{0.57\textwidth}
@@ -368,7 +377,7 @@ Initially, we considered only the times between July-October 2005 because we kne
         \includegraphics[width=\textwidth]{littleDates_imf_with_z.png}
     \end{minipage}
     \begin{minipage}[c]{0.4\textwidth}
-        \captionof{figure}{Histogram showing the variation of $B_Z$ with $|Z_{GSE}|$. Each bar is the mean IMF value for the $|Z_{GSM}|$ bin [z, $|Z_{GSM}|_{MAX}$]. The height of the bars at $>7R_e$ strongly indicates that high temperatures in the lobe are correlated with northward IMF. However, as shown later - this may not be the case in reality. }
+        \captionof{figure}{Bar chart showing the variation of $B_Z$ with $|Z_{GSE}|$. Each bar is the mean IMF value for the $|Z_{GSM}|$ bin [z, $|Z_{GSM}|_{MAX}$]. The height of the bars at $>7R_e$ strongly indicates that high temperatures in the lobe are correlated with northward IMF. However, as shown later - this may not be the case in reality. }
         \label{fig:littleDates_imf_with_z}
     \end{minipage}
 \end{Figure}
@@ -377,7 +386,7 @@ Figure \ref{fig:littleDates_imf_with_z} shows how the average IMF $B_z$ varies w
 
 For $|Z_{GSE}|<7R_e$ the average IMF is approximately stationary, which is as expected and aligns with the statement in section \ref{interMF} that IMF $B_Z$ is 50\% positive and 50\% negative on longer timescales. For $|Z_{GSE}|\ge7R_e$ we see a steadily increasing positive trend for the IMF. This would be an indication that high temperatures in the lobe are correlated with northward IMF. 
 
-A correlation with northward IMF suggests that high temperatures in the lobe do not occur during the typical Dungey cycle. If tail reconnection is still happening but dayside reconnection has been halted then there could be a build up of flux in the tail that has nowhere to go apart from spreading into the lobes and becoming trapped. This mechanism was proposed by Fear \textbf{et al} \cite{Fear1506}, they provide further evidence that this is the cause by showing for the case study on 15/09/2005 that atypically hot plasma occurs on closed field lines.
+A correlation with northward IMF suggests that high temperatures in the lobe do not occur during the typical Dungey cycle. If tail reconnection is still happening but dayside reconnection has been halted then there could be a build up of flux in the tail that has nowhere to go apart from spreading into the lobes and becoming trapped. This mechanism was proposed by Milan \textbf{et al} \cite{TPAdebate}, they provide further evidence that this is the cause by showing for the case study on 15/09/2005 that atypically hot plasma occurs on closed field lines.
 
 \subsubsection{Angle of IMF in Y-Z plane}
 We further explore this relationship by considering the angle that IMF creates in the GSE Y-Z plane (see diagram on the right below).
@@ -501,8 +510,60 @@ We looked at data from ESA's Cluster spacecraft mission during the years 2002-20
 
 First, we determined the nominal temperature of the magnetosphere and how it varies with $Z$. As expected, low $Z$ resulted in high temperatures, as the spacecraft would have been in the plasma sheet which is known to be hot. Increasing $Z$ resulted in a decrease in temperature, as the spacecraft moves out of the plasma sheet and into the lobe, a much less active region. The boundary between plasma sheet and lobe changed over time, for the time periods we worked with (July-October 2002-2010) we determined the inner edge of the lobe to be at approximately $\pm6$ Earth radii. Figure \ref{fig:avg_temp_z} showed us that a temperature threshold of above $20MK$ was a good indicator for when the temperature in the lobe was uncharacteristically high.
 
-From here, we expanded to include data from NASA's OMNI spacecraft, which is situated at L1 and provides measurements of many things, including the time-lagged IMF components $B_x$, $B_y$ and $B_z$. Using these, we were able to determine whether the IMF was pointing northward or southward at the time Cluster was taking measurements of the temperature in the lobe. 
+From here, we expanded to include data from NASA's OMNI spacecraft, which is situated at L1 and provides measurements of many things, including the time-lagged IMF components $B_x$, $B_y$ and $B_z$. Using these, we were able to determine whether the IMF was pointing northward or southward at the time Cluster was taking measurements of the temperature in the lobe. The average $B_z$ was $0.004\pm3.275\ nT$, which confirms the known result that the IMF is 50\% northwards and 50\% southwards.
+
+Using this data, we could then plot the variation in mean $B_Z$ as $|Z|$ increases, but only considering temperatures $T>20MK$. This is because we are interested only in the high-temperature events and because, as shown above - the average $B_Z$ for all $T$ is zero. At first, this analysis was done with a smaller sample of the full dataset, just the months July-October 2005, as it was much faster to work with and we know there was an ideal event discussed in depth by Fear \textit{et al} \cite{Fear1506} that happened during that time, on 15/09/2005. This smaller dataset gave the result that IMF $B_Z$ is strongly correlated with $|Z_{GSE}|$, we confirmed this by looking at the angle the IMF makes on the Y-Z plane, and taking the directional mean along with the resultant length of this angle. This gave a more comprehensive view of the IMF structure and also showed that when the magnitude of $B$ bias was removed, the result stayed the same.
+
+Building upon this, we performed the same analysis on all available data instead of just a sample. With this larger dataset we saw that the initial result did not hold up. Plotting another bar chart showed that the trend has a similar shape, but compressed to over eight times weaker. This meant that instead of the average $B_Z$ increasing to $+8\ nT$ at [11, 12] $R_e$ we only saw an increase of less than $1\ nT$. 
+
+Looking at each year's worth of data individually showed that 2005 was an anomalous year, with 2002 showing a similar trend but all other years showing either a decrease in $B_Z$ or a flat zero, the reasons for this are as yet unknown and would be a good extension to the project, as it appears there are some circumstances where northwards IMF is correlated with high temperatures in the lobe, but this relationship is not always true. 
+
+Exploring further, we found that the average IMF angle distribution did not point northwards at all no matter the value of $|Z|$, this further goes to show that the initial trend is not representative of all time.
+
+Lastly, we took the 732 detected high-temperature events and began to look into the relationship they have with transpolar arcs. This is an area that could be expanded upon in future as we were able to show that - using a reduced dataset - transpolar arcs were occurring in 50\% of occasions when high temperatures were spotted in the lobe, compared to a 12\% occurrence in a random sample. However, we have already seen that drawing conclusions from small samples of data can cause misleading results so it is suggested that this avenue is explored further in future projects.
 
 \printbibliography
+
+\begin{appendices}
+\section{Derivation of MHD induction equation \label{app:mhd}}
+The magnetohydrodynamic induction equation can be derived from these five equations:
+
+\begin{align}
+    \text{Ohm's law:} &\quad \textbf{J}=\sigma(\textbf{E}+\textbf{V}\times\textbf{B}) \\
+    \text{Ampere's law:} &\quad \nabla\times\textbf{B}=\mu_0\textbf{J} \\
+    \text{Faraday's law:} &\quad \frac{\partial\textbf{B}}{\partial t}=-(\nabla\times\textbf{E}) \\
+    \text{Maxwell's equation for magnetism:} &\quad \nabla . \textbf{B}=0 \\
+    \text{Vector identity:} &\quad \nabla\times(\nabla\times\textbf{B})=\nabla(\nabla . \textbf{B})-\nabla^2\textbf{B}
+\end{align}
+
+\noindent Rearrange  Ohm's law then use Faraday's law:
+\begin{align}
+    \textbf{E} &= \frac{\textbf{J}}{\sigma}-\textbf{V}\times\textbf{B} \\
+    \frac{\partial\textbf{B}}{\partial t} &= \nabla\times\left(\textbf{V}\times\textbf{B}-\frac{\textbf{J}}{\sigma}\right) \\
+\end{align}
+
+\noindent Rearrange Ampere's law to get:
+\begin{equation}
+    \textbf{J}=\frac{\nabla\times\textbf{B}}{\mu_0}
+\end{equation}
+
+\noindent Therefore:
+\begin{equation}
+    \frac{\partial\textbf{B}}{\partial t} = \nabla\times(\textbf{V}\times\textbf{B})-\frac{\nabla\times(\nabla\times\textbf{B})}{\mu_0\sigma}
+    \label{pre-eq}
+\end{equation}
+
+\noindent The vector identity and Maxwell's equation give:
+\begin{equation}
+    \nabla\times(\nabla\times\textbf{B})=\nabla(\nabla . \textbf{B})-\nabla^2\textbf{B}=-\nabla^2\textbf{B}
+\end{equation}
+
+Which simplifies eq.\ref{pre-eq} to:
+\begin{equation}
+    \frac{\partial\textbf{B}}{\partial t}=\nabla\times(\textbf{V}\times\textbf{B})+\frac{\nabla^2\textbf{B}}{\mu_0\sigma}
+\end{equation}
+
+\end{appendices}
+
 % \end{multicols}
 \end{document}
